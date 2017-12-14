@@ -54,6 +54,7 @@ template <class T>
         int fila; /**< fila */
         int col; /**< columna */
         T d; /**< dato */
+        bool acertada = false; /**< palabra acertada */
       }; /**< estructura */
 
       list<tripleta> m; /**< list */
@@ -83,6 +84,14 @@ template <class T>
         *
         */
       int size(){ return m.size(); }
+
+      /**
+      *   @brief borrar
+      *   @fila  fila del elemento de la matriz que queremos borrar
+      *   @col   columna del elemento de la matriz que queremos borrar
+      *   metodo que elimina un elemento de la matriz dandole una posicion de columna y de fila
+      */
+      void borrar(int fila,int col);
 
       /**
         *
@@ -163,6 +172,16 @@ template <class T>
         *
         */
       void append(int i, int j, T valor);
+
+      /**
+        *
+        */
+      bool estaAcertada(int fila, int columna);
+
+      /**
+        *
+        */
+      void ponerAcertada(int fila, int columna);
 
       /**
     		* @brief Sobrecarga del operador <<

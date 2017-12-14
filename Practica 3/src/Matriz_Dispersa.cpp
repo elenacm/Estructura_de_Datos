@@ -1,9 +1,23 @@
 #include "Matriz_Dispersa.h"
+#include <iostream>
+#include <string>
+#include <list>
 
 //Constructor por defecto
 template <class T>
 Matriz_Dispersa<T>::Matriz_Dispersa(T valor){
   valor_defecto = valor;
+}
+
+//Borra un elemento de la matriz
+template <class T>
+void Matriz_Dispersa<T>::borrar(int fila,int col){
+  typename list<tripleta>::iterator it;
+  for(it=m.begin();it != m.end();it++){
+    if((*it).fila == fila && (*it).col == col){
+      it = m.erase(it);
+    }
+  }
 }
 
 //Modificador del elemento (i,j)
@@ -16,6 +30,33 @@ void Matriz_Dispersa<T>::append(int i, int j, T valor){
     tri.col = j;
     tri.d = valor;
     m.push_back(tri);
+  }
+}
+
+//Comprobar si la palabra es acertada
+template<class T>
+bool Matriz_Dispersa<T>::estaAcertada(int fila,int columna){
+  typename list<tripleta>::iterator it;
+
+  for(it=m.begin();it != m.end();it++){
+    if((*it).fila == fila && (*it).col == columna){
+
+      return (*it).acertada;
+    }
+  }
+  return false;
+}
+
+//Poner una palabra como acertada
+template<class T>
+void Matriz_Dispersa<T>::ponerAcertada(int fila, int columna){
+  typename list<tripleta>::iterator it;
+
+  for(it=m.begin();it != m.end();it++){
+    if((*it).fila == fila && (*it).col == columna){
+
+      (*it).acertada=true;
+    }
   }
 }
 

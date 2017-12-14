@@ -16,7 +16,7 @@ Sopa_Letras::Sopa_Letras(){
 }
 
 bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
-  bool comprobar_esta_en_lista = true;
+  bool encontrado = true;
   char *palabra_char = new char[p.length() + 1];
   strcpy(palabra_char, p.c_str());
 
@@ -25,7 +25,7 @@ bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
     for(unsigned int l=0; l < p.length(); l++, ind++){
       acertadas.append(ind, j, false);
       if(matriz.getElemento(ind, j) != palabra_char[l]){
-        comprobar_esta_en_lista = false;
+        encontrado = false;
       }
     }
   }
@@ -34,7 +34,7 @@ bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
     for(unsigned int l = 0; l < p.length(); ind--, l++){
       acertadas.append(ind, j, false);
       if(matriz.getElemento(ind, j) != palabra_char[l]){
-        comprobar_esta_en_lista = false;
+        encontrado = false;
       }
     }
   }
@@ -43,7 +43,7 @@ bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
     for(unsigned int l = 0; l < p.length(); ind++, l++){
       acertadas.append(i, ind, false);
       if(matriz.getElemento(i, ind) != palabra_char[l]){
-        comprobar_esta_en_lista = false;
+        encontrado = false;
       }
     }
   }
@@ -52,7 +52,7 @@ bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
     for(unsigned int l = 0; l < p.length(); ind--, l++){
       acertadas.append(i, ind, false);
       if(matriz.getElemento(i, ind) != palabra_char[l]){
-        comprobar_esta_en_lista = false;
+        encontrado = false;
       }
     }
   }
@@ -62,7 +62,7 @@ bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
     for(unsigned int l = 0; l < p.length(); indi++, indj++,l++){
       acertadas.append(indi, indj, false);
       if(matriz.getElemento(indi, indj) != palabra_char[l]){
-        comprobar_esta_en_lista = false;
+        encontrado = false;
       }
     }
   }
@@ -72,16 +72,16 @@ bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
     for(unsigned int l = 0; l < p.size(); indi++, indj--,l++){
       acertadas.append(indi, indj, false);
       if(matriz.getElemento(indi, indj) != palabra_char[l]){
-        comprobar_esta_en_lista = false;
+        encontrado = false;
       }
     }
   }
 
-  if(comprobar_esta_en_lista){
+  if(encontrado){
     cout << "Comprobando si está en lista" << endl << flush;
     if(!Esta_EnLista(p)){
       cout << "No está la palabra" << endl;
-      comprobar_esta_en_lista = false;
+      encontrado = false;
     }
     else{
       nAcertadas++;
@@ -89,7 +89,7 @@ bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
     }
   }
 
-  return comprobar_esta_en_lista;
+  return encontrado;
 }
 
 bool Sopa_Letras::Esta_EnLista(string palabra){

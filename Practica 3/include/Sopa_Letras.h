@@ -156,7 +156,7 @@ class Sopa_Letras{
   				s << "";
 
   			s << " Titulo: " << sopa.getTitulo() << endl << flush;
-        s << " Numero de palabras ocultas -> " << sopa.palabras_ocultas.size() << endl;
+        s << " Numero de palabras ocultas -> " << sopa.getPendientes() << endl;
         s << " Palabras descubiertas -> " << sopa.getAcertadas() << endl;
 
         s << "    " << flush;
@@ -174,8 +174,9 @@ class Sopa_Letras{
   					s << i << " |" << flush;
   				for(int j=sopa.matriz.getMenor_Columna();j<=sopa.matriz.getMayor_Columna();j++){
   					if(sopa.matriz.getElemento(i,j) != sopa.matriz.get_Valor_Defecto()){
-  						if(sopa.acertadas.getElemento(i,j) != '\0')
+  						if(sopa.matriz.getElemento(i,j) != '\0'){
   							s << " " << sopa.matriz.getElemento(i,j) << " ";
+              }
   						else
   							s << " " << sopa.matriz.getElemento(i,j) << " ";
   					} else {
@@ -206,10 +207,11 @@ class Sopa_Letras{
   			    if (!(iss >> i >> j >> d >> palabra)) { break; } // error
   			    //cout << "!! " << palabra << " i:" << i << endl;
   			    char * palabra_char = new char[palabra.length() + 1];
-  				strcpy(palabra_char, palabra.c_str());
-  				bool puedeInsertarse=true;
+  				  strcpy(palabra_char, palabra.c_str());
+			      bool puedeInsertarse=true;
 
   		    	sopa.palabras_ocultas.push_back(palabra);
+            sopa.nPendientes++;
   			    if(d == "hi"){ // horizontal izquierda
   			    	int ind = j;
   			    	for (unsigned int l=0;l<palabra.length();l++,ind--){
