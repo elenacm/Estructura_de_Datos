@@ -13,6 +13,29 @@
 #include <limits.h>
 
 using namespace std;
+
+template<class T>
+struct tripleta{
+  int fila; /**< fila */
+  int col; /**< columna */
+  T d; /**< dato */
+
+  bool operator<(tripleta<T>& a){
+    if(this->fila < a.fila)
+    return true;
+    else if(this->fila == a.fila && this->col == a.col)
+    return true;
+    else
+    return false;
+  }
+
+  friend ostream & operator<<(ostream &os, tripleta<T>& t){
+    os << t.d;
+    return os;
+  }
+
+}; /**< estructura */
+
 template <class T>
 
 /**
@@ -50,14 +73,8 @@ template <class T>
       *
       */
     private:
-      struct tripleta{
-        int fila; /**< fila */
-        int col; /**< columna */
-        T d; /**< dato */
-        bool acertada = false; /**< palabra acertada */
-      }; /**< estructura */
 
-      list<tripleta> m; /**< list */
+      list<tripleta<T>> m; /**< list */
       T valor_defecto; /**< valor por defecto */
 
     public:
@@ -68,7 +85,9 @@ template <class T>
         * Crea un objeto de la clase Matriz Dispersa con valor por defecto '0'
         *
         */
-      Matriz_Dispersa<T>(T valor = '0');
+      Matriz_Dispersa();
+
+      Matriz_Dispersa(T valor);
 
       /**
         *
@@ -77,6 +96,8 @@ template <class T>
         *
         */
       void setValorDefecto(const T &dato){ valor_defecto = dato; }
+
+      pair<bool, typename list<tripleta<T>>::iterator> posicion_indice(int i, int j);
 
       /**
         *
@@ -149,6 +170,8 @@ template <class T>
         */
       int Casillas_Sin_Valor_Defecto();
 
+      list<tripleta<T>> getMatriz();
+
       /**
         *
         * @brief Obtiene el número de filas
@@ -217,39 +240,67 @@ template <class T>
     			return m;
     	}
 
-      class iteratorNoDefecto{
+      class iterator{
         private:
-          typename list<tripleta>::iterator it;
+          typename list<tripleta<T>>::iterator it;
         public:
-          iteratorNoDefecto & operator++(){
+          iterator & operator++(){
             do{
               ++it;
             }while((*it).d == valor_defecto);
             return *this;
          }
-         iteratorNoDefecto & operator--(){
+         iterator & operator--(){
            do{
              --it;
            }while((*it).d == valor_defecto);
            return *this;
          }
-         tripleta &operator *(){
+         tripleta<T> &operator *(){
            return (*it);
          }
-         bool operator ==(const iteratorNoDefecto &i){
+         bool operator ==(const iterator &i){
            return i.it==it;
          }
-         bool operator !=(const iteratorNoDefecto &i){
+         bool operator !=(const iterator &i){
            return i.it!=it;
          }
          friend class Matriz_Dispersa;
       };
 
+      class const_iterator {
+        private:
+            typename list<tripleta<T>>::const_iterator it;
+        public:
+            const_iterator(){}
+
+            bool operator ==(const const_iterator i)const{
+                return i.it==it;
+            }
+
+            bool operator !=(const const_iterator i)const{
+                return i.it!=it;
+            }
+            const tripleta<T>& operator*()const{
+                return *it;
+            }
+            const_iterator & operator ++(){
+                ++it;
+                return *this;
+            }
+            const_iterator & operator --(){
+                --it;
+                return *this;
+            }
+            friend class Matriz_Dispersa;
+            friend class iterator;
+      };
+
       /**
   		 * @brief Inicializa un iterator al comienzo de la matriz
   		 * */
-  		 iteratorNoDefecto begin(){
-  			 iteratorNoDefecto i;
+  		 iterator begin(){
+  			 iterator i;
   			 i.it=m.begin();
          if(*(i.it).d == valor_defecto) i++;
   			 return i;
@@ -258,12 +309,23 @@ template <class T>
   		/**
   		 * @brief Inicializa un iterator al final de la matriz
   		 * */
-  		 iteratorNoDefecto end(){
-         iteratorNoDefecto i;
+  		 iterator end(){
+         iterator i;
          i.it=m.end();
          if(*(i.it).d == valor_defecto) i--;
          return i;
   		 }
+
+       const_iterator cbegin()const{
+         const_iterator i;
+         i.it=m.cbegin();
+         return i;
+       }
+       const_iterator cend()const{
+          const_iterator i;
+          i.it=m.cend();
+          return i;
+       }
 };
 
 #include "../src/Matriz_Dispersa.cpp"

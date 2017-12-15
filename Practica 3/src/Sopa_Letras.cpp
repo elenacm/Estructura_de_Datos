@@ -3,10 +3,10 @@
   * @brief Implementación de la sopa de letras
   *
   */
-#include "Sopa_Letras.h"
-#include "Matriz_Dispersa.h"
 #include <iostream>
 #include <string>
+#include <list>
+#include "Sopa_Letras.h"
 
 using namespace std;
 
@@ -15,91 +15,197 @@ Sopa_Letras::Sopa_Letras(){
   nPendientes = 0;
 }
 
-bool Sopa_Letras::Esta_Palabra(string p, int i, int j,string d){
-  bool encontrado = true;
-  char *palabra_char = new char[p.length() + 1];
-  strcpy(palabra_char, p.c_str());
+bool Sopa_Letras::Esta_Palabra(string w, int i, int j,string d){
+  bool correcto = true;
+  pair<bool, typename list<tripleta<char>>::iterator > posicion = matriz.posicion_indice(i, j);
+  unsigned int cont=0;
 
-  if(d == "vd"){ //vertical abajo
-    int ind = i;
-    for(unsigned int l=0; l < p.length(); l++, ind++){
-      acertadas.append(ind, j, false);
-      if(matriz.getElemento(ind, j) != palabra_char[l]){
-        encontrado = false;
+  if(d == "vu"){     // Direccion Arriba ("vu")
+    while(cont<w.length() && correcto){
+      if(posicion.first && (*posicion.second).d != w[cont]){
+        correcto=false;
       }
-    }
-  }
-  else if(d == "vu"){ //vertical arriba
-    int ind = i;
-    for(unsigned int l = 0; l < p.length(); ind--, l++){
-      acertadas.append(ind, j, false);
-      if(matriz.getElemento(ind, j) != palabra_char[l]){
-        encontrado = false;
-      }
-    }
-  }
-  else if(d == "hd"){ //horizontal derecha
-    int ind = j;
-    for(unsigned int l = 0; l < p.length(); ind++, l++){
-      acertadas.append(i, ind, false);
-      if(matriz.getElemento(i, ind) != palabra_char[l]){
-        encontrado = false;
-      }
-    }
-  }
-  else if(d == "hi"){ //horizontal izquierda
-    int ind = j;
-    for(unsigned int l = 0; l < p.length(); ind--, l++){
-      acertadas.append(i, ind, false);
-      if(matriz.getElemento(i, ind) != palabra_char[l]){
-        encontrado = false;
-      }
-    }
-  }
-  else if(d == "dd"){ //diagonal abajo derecha
-    int indj = j;
-    int indi = i;
-    for(unsigned int l = 0; l < p.length(); indi++, indj++,l++){
-      acertadas.append(indi, indj, false);
-      if(matriz.getElemento(indi, indj) != palabra_char[l]){
-        encontrado = false;
-      }
-    }
-  }
-  else if(d == "di"){ //diagonal abajo izquierda
-    int indj = j;
-    int indi = i;
-    for(unsigned int l = 0; l < p.size(); indi++, indj--,l++){
-      acertadas.append(indi, indj, false);
-      if(matriz.getElemento(indi, indj) != palabra_char[l]){
-        encontrado = false;
-      }
+      cont++;
+      --i;
+      posicion=matriz.posicion_indice(i, j);
     }
   }
 
-  if(encontrado){
-    cout << "Comprobando si está en lista" << endl << flush;
-    if(!Esta_EnLista(p)){
-      cout << "No está la palabra" << endl;
-      encontrado = false;
-    }
-    else{
-      nAcertadas++;
-      nPendientes--;
+  else if(d == "vd"){    // Abajo ("vd")
+    while(cont<w.length() && correcto){
+      if(posicion.first && (*posicion.second).d != w[cont])
+        correcto=false;
+      cont++;
+      ++i;
+      posicion=matriz.posicion_indice(i, j);
     }
   }
 
-  return encontrado;
+  else if(d == "hi"){     // Izquierda ("hi")
+    while(cont<w.length() && correcto){
+      if(posicion.first && (*posicion.second).d != w[cont])
+        correcto=false;
+      cont++;
+      --j;
+      posicion=matriz.posicion_indice(i, j);
+    }
+  }
+
+  else if(d == "hd"){     // Derecha ("hd"),
+    while(cont<w.length() && correcto){
+      if(posicion.first && (*posicion.second).d != w[cont])
+        correcto=false;
+      cont++;
+      ++j;
+      posicion=matriz.posicion_indice(i, j);
+    }
+  }
+
+  else if(d == "dd"){     // Diagonal abajo derecha ("dd"),
+    while(cont<w.length() && correcto){
+      if(posicion.first && (*posicion.second).d != w[cont])
+        correcto=false;
+      cont++;
+      ++i;
+      ++j;
+      posicion=matriz.posicion_indice(i, j);
+    }
+  }
+
+  else if(d == "di"){     // Diagonal abajo izquierda (di)
+    while(cont<w.length() && correcto){
+      if(posicion.first && (*posicion.second).d != w[cont])
+        correcto=false;
+      cont++;
+      ++i;
+      --j;
+      posicion=matriz.posicion_indice(i,j);
+    }
+  }
+
+  else correcto=false;
+
+  return correcto;
 }
 
-bool Sopa_Letras::Esta_EnLista(string palabra){
+void Sopa_Letras::Poner_Acertada(string w, int row, int col, string d){
+  typename list<string>::iterator it = palabras_ocultas.begin();
+  while((*it)!=w)
+    it++;
 
-  for(auto it : palabras_ocultas){
-    if(strcmp(it.data(), palabra.data()) == 0)
-      return true;
-  }
+  palabras_ocultas.erase(it); // quitada de no_descubiertas
+  palabras_descubiertas.push(w);   // la pongo en la primera posicion de descubiertas
+  ColocarResueltas(w, row, col,d);
+}
 
-  return false;
+void Sopa_Letras::ColocarResueltas(string w, int i, int j, string d){
+   pair<bool, typename list<tripleta<char>>::iterator > pos = acertadas.posicion_indice(i, j);
+   list<tripleta<char>>::iterator it = acertadas.getMatriz().begin();
+   unsigned int cont=0;
+   if(d == "vu"){     // Direccion Arriba ("vu")
+      while(cont<w.length()){
+        if(!pos.first){
+          tripleta<char> t;
+          t.fila = i;
+          t.col  = j;
+          t.d    = w[cont];
+          acertadas.append(t.fila, t.col, t.d);
+        }
+
+        cont++;
+        --i;
+        pos = acertadas.posicion_indice(i, j);
+
+      }
+   }
+
+   else if(d == "vd"){    // Abajo ("vd")
+      while(cont<w.length()){
+        if(!(pos.first)){
+          tripleta<char> t;
+          t.fila = i;
+          t.col  = j;
+          t.d    = w[cont];
+          acertadas.append(t.fila, t.col, t.d);
+        }
+
+        cont++;
+        ++i;
+        pos = acertadas.posicion_indice(i, j);
+      }
+   }
+
+   else if(d == "hi"){   // Izquierda ("hi"),
+      while(cont<w.length()){
+        if(!pos.first){
+          tripleta<char> t;
+          t.fila = i;
+          t.col  = j;
+          t.d    = w[cont];
+          acertadas.append(t.fila, t.col, t.d);
+        }
+
+        cont++;
+        --j;
+        pos = acertadas.posicion_indice(i, j);
+      }
+   }
+
+
+   else if(d == "hd"){   // Derecha ("hd"),
+      while(cont<w.length()){
+        if(!pos.first){
+          tripleta<char> t;
+          t.fila = i;
+          t.col  = j;
+          t.d    = w[cont];
+          acertadas.append(t.fila, t.col, t.d);
+        }
+
+        cont++;
+        ++j;
+        pos = acertadas.posicion_indice(i, j);
+      }
+   }
+
+   else if(d == "dd"){    // Diagonal abajo derecha ("dd"),
+     while(cont<w.length()){
+       if(!pos.first){
+         tripleta<char> t;
+         t.fila = i;
+         t.col  = j;
+         t.d    = w[cont];
+         acertadas.append(t.fila, t.col, t.d);
+       }
+
+       cont++;
+       ++i;
+       ++j;
+       pos = acertadas.posicion_indice(i,j);
+     }
+   }
+
+   else if(d == "di"){   // Diagonal abajo izquierda (di)
+     while(cont<w.length()){
+        if(!pos.first){
+          tripleta<char> t;
+          t.fila = i;
+          t.col  = j;
+          t.d    = w[cont];
+          acertadas.append(t.fila, t.col, t.d);
+        }
+
+        cont++;
+        ++i;
+        --j;
+        pos = acertadas.posicion_indice(i,j);
+      }
+   }
+   acertadas.getMatriz().sort();
+ }
+
+void Sopa_Letras::SetNombre(string n){
+  titulo = n;
 }
 
 bool Sopa_Letras::addPalabra(string palabra, int i, int j, string d){

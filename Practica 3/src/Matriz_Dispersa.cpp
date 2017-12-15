@@ -1,9 +1,11 @@
-#include "Matriz_Dispersa.h"
 #include <iostream>
 #include <string>
 #include <list>
 
 //Constructor por defecto
+template <class T>
+Matriz_Dispersa<T>::Matriz_Dispersa(){}
+
 template <class T>
 Matriz_Dispersa<T>::Matriz_Dispersa(T valor){
   valor_defecto = valor;
@@ -12,7 +14,7 @@ Matriz_Dispersa<T>::Matriz_Dispersa(T valor){
 //Borra un elemento de la matriz
 template <class T>
 void Matriz_Dispersa<T>::borrar(int fila,int col){
-  typename list<tripleta>::iterator it;
+  typename list<tripleta<T>>::iterator it;
   for(it=m.begin();it != m.end();it++){
     if((*it).fila == fila && (*it).col == col){
       it = m.erase(it);
@@ -20,23 +22,62 @@ void Matriz_Dispersa<T>::borrar(int fila,int col){
   }
 }
 
+template<typename T>
+pair<bool, typename list<tripleta<T>>::iterator> Matriz_Dispersa<T>::posicion_indice(int i, int j){
+  typename list<tripleta<T>>::iterator it = m.begin();
+
+  while(it!=m.end()){
+    if((*it).fila == i && (*it).col == j){
+      return pair<bool, typename list<tripleta<T>>::iterator> (true, it);
+    }
+    it++;
+  }
+  it=m.begin();
+  return  pair<bool, typename list<tripleta<T>>::iterator> (false,it);
+
+}
+
+template<typename T>
+list<tripleta<T>> Matriz_Dispersa<T>::getMatriz(){
+  return m;
+}
+
 //Modificador del elemento (i,j)
 template <class T>
 void Matriz_Dispersa<T>::append(int i, int j, T valor){
-  cout << "Introduciendo dato en fila " << i << " y columna " << j << endl;
-  if(valor != valor_defecto){
-    tripleta tri;
-    tri.fila = i;
-    tri.col = j;
-    tri.d = valor;
-    m.push_back(tri);
+  //cout << "Introduciendo dato en fila " << i << " y columna " << j << endl;
+  bool encontrado = false;
+
+  pair <bool, typename list<tripleta<T>>::iterator > posicion = posicion_indice(i, j);
+  if(!posicion.first){
+    if(posicion.first){
+      encontrado = true;
+      m.erase(posicion.second);
+    }
+  }
+  else{
+    pair <bool, typename list<tripleta<T>>::iterator > posicion = posicion_indice(i, j);
+    if(posicion.first){
+      encontrado = true;
+      (*posicion.second).d = valor;
+    }
+  }
+
+  if(!encontrado){
+    tripleta<T> t;
+    t.fila = i;
+    t.col = j;
+    t.d = valor;
+    m.push_back(t);
+
+    m.sort();
   }
 }
 
 //Comprobar si la palabra es acertada
 template<class T>
 bool Matriz_Dispersa<T>::estaAcertada(int fila,int columna){
-  typename list<tripleta>::iterator it;
+  typename list<tripleta<T>>::iterator it;
 
   for(it=m.begin();it != m.end();it++){
     if((*it).fila == fila && (*it).col == columna){
@@ -50,7 +91,7 @@ bool Matriz_Dispersa<T>::estaAcertada(int fila,int columna){
 //Poner una palabra como acertada
 template<class T>
 void Matriz_Dispersa<T>::ponerAcertada(int fila, int columna){
-  typename list<tripleta>::iterator it;
+  typename list<tripleta<T>>::iterator it;
 
   for(it=m.begin();it != m.end();it++){
     if((*it).fila == fila && (*it).col == columna){

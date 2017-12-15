@@ -9,17 +9,21 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include "Sopa_Letras.h"
 
 using namespace std;
 
 class Diccionario{
 	private:
 		multimap<string,string> datos;
+		Sopa_Letras sopa;
 	public:
 		Diccionario() : datos(){}
-
-		void Insertar(string palabra, string def);
-		void Borrar(const string &palabra, const string &def);
+		multimap<string,string> getMultimap()const;
+		Diccionario escogePalabras(int b);
+		void ponePalabraEnSopa();
+		void Borrar(const string &palabra);
+		Sopa_Letras getSopa();
 		list<string> BuscaDef(const string &palabra) const;
 		int size(){ return datos.size(); }
 		unsigned int contabiliza(const string &palabra);
@@ -29,8 +33,9 @@ class Diccionario{
 
 		class iterator{
 			private:
-				map<string,string>::iterator it;
+				typename multimap<string,string>::iterator it;
 		 	public:
+				iterator(){}
 				iterator & operator++(){
 					++it;
 					return *this;
@@ -49,7 +54,34 @@ class Diccionario{
 				 return i.it!=it;
 			 }
 			 friend class Diccionario;
+			 friend class const_iterator;
 		};
+
+		class const_iterator {
+      private:
+          typename multimap<string, string>::const_iterator it;
+      public:
+          const_iterator(){}
+					const_iterator & operator ++(){
+						++it;
+						return *this;
+					}
+					const_iterator & operator --(){
+						--it;
+						return *this;
+					}
+          bool operator ==(const const_iterator i)const{
+              return i.it==it;
+          }
+          bool operator !=(const const_iterator i)const{
+              return i.it!=it;
+          }
+          const pair<const string, string>& operator*()const{
+              return *it;
+          }
+          friend class Diccionario;
+          friend class iterator;
+    };
 
 		/**
 		 * @brief Inicializa un iterator al comienzo del diccionario
@@ -68,6 +100,24 @@ class Diccionario{
 			 i.it=datos.end();
 			 return i;
 		 }
+
+		 /**
+ 		 * @brief Inicializa un iterator al comienzo del diccionario
+ 		 * */
+ 		 const_iterator cbegin()const{
+ 			 const_iterator i;
+ 			 i.it=datos.cbegin();
+ 			 return i;
+ 		 }
+
+ 		/**
+ 		 * @brief Inicializa un iterator al final del diccionario
+ 		 * */
+ 		 const_iterator cend(){
+ 			 const_iterator i;
+ 			 i.it=datos.cend();
+ 			 return i;
+ 		 }
 
 		 friend istream & operator>>(istream &is, Diccionario &d){
 			 pair<string,string> p;

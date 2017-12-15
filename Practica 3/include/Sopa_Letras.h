@@ -8,13 +8,14 @@
 #define _SOPA_LETRAS_H
 
 #include <iostream>
-#include "Matriz_Dispersa.h"
 #include <sstream>
+#include <stdlib.h>
 #include <cctype>
 #include <stdio.h>
 #include <string.h>
 #include <list>
 #include <queue>
+#include "Matriz_Dispersa.h"
 
 using namespace std;
 
@@ -91,7 +92,7 @@ class Sopa_Letras{
     int getMayor_Columna(){ return matriz.getMayor_Columna(); }
 
     /**
-      * @brief Obtiene el numero total de columnas
+      * @brief Obtiene el numero #include "Matriz_Dispersa.h"total de columnas
       *
       */
     int getColumnas(){ return matriz.getColumnas(); }
@@ -107,6 +108,7 @@ class Sopa_Letras{
       *
       */
     int getPendientes(){ return nPendientes; }
+    void SetNombre(string n);
 
     /**
       * @brief Comprueba si ha acertado una palabra
@@ -136,6 +138,10 @@ class Sopa_Letras{
       *
   		*/
 		bool Esta_EnLista(string palabra);
+    void Colocar(string w, int i, int j, string d);
+    void Poner_Acertada(string w, int row, int col, string d);
+    void ColocarResueltas(string w, int i, int j, string d);
+
 
     /**
       * @brief
@@ -196,105 +202,19 @@ class Sopa_Letras{
   		* @param is el flujo de entrada
   		* @param sopa la referencia al objeto que llama al método
   		*/
-  		friend istream & operator>>(istream & is, Sopa_Letras & sopa) {
-  			getline(is, sopa.titulo);
-  			string line;
-  			while (getline(is, line)){
-  			    istringstream iss(line);
-  			    int i, j;
-  			    string d, palabra;
+  		friend istream& operator>>(istream& is, Sopa_Letras &s){
+        string nombre, direccion, palabra;
+        int fil, col;
+        s.matriz.getMatriz().clear();
 
-  			    if (!(iss >> i >> j >> d >> palabra)) { break; } // error
-  			    //cout << "!! " << palabra << " i:" << i << endl;
-  			    char * palabra_char = new char[palabra.length() + 1];
-  				  strcpy(palabra_char, palabra.c_str());
-			      bool puedeInsertarse=true;
+        getline(is, nombre);
+        s.SetNombre(nombre);
 
-  		    	sopa.palabras_ocultas.push_back(palabra);
-            sopa.nPendientes++;
-  			    if(d == "hi"){ // horizontal izquierda
-  			    	int ind = j;
-  			    	for (unsigned int l=0;l<palabra.length();l++,ind--){
-  	    				if((sopa.matriz.getElemento(i,ind) != sopa.matriz.get_Valor_Defecto()) && (sopa.matriz.getElemento(i,ind) != palabra_char[l])){
-  	    					puedeInsertarse=false;
-  	    				}
-  			    	}
-  			    	if(puedeInsertarse)
-  					    for (unsigned int l=0;l<palabra.length();l++,j--){
-  		    				sopa.matriz.append(i,j,palabra_char[l]);
-  					    }
-  				}
-  			    else if (d == "hd"){ // horizontal derecha
-  			    	int ind=j;
-  			    	for (unsigned int l=0;l<palabra.length();l++,ind++){
-  	    				if((sopa.matriz.getElemento(i,ind) != sopa.matriz.get_Valor_Defecto()) && (sopa.matriz.getElemento(i,ind) != palabra_char[l])){
-  	    					puedeInsertarse=false;
-  	    				}
-  			    	}
-  			    	if(puedeInsertarse)
-  				    	for (unsigned int l=0;l<palabra.length();l++,j++){
-  		    				sopa.matriz.append(i,j,palabra_char[l]);
-                }
-  			    }
-      			else if (d == "vu"){ // vertical arriba
-      				int ind = i;
-      				for (unsigned int l=0;l<palabra.length();l++,ind--){
-  	    				if((sopa.matriz.getElemento(ind,j) != sopa.matriz.get_Valor_Defecto()) && (sopa.matriz.getElemento(ind,j) != palabra_char[l])){
-  	    					puedeInsertarse=false;
-  	    				}
-  			    	}
-  			    	if(puedeInsertarse)
-  				    	for (unsigned int l=0;l<palabra.length();l++,i--){
-  		    				sopa.matriz.append(i,j,palabra_char[l]);
-  				    	}
-  			    }
-      			else if (d == "vd"){ // vertical abajo
-      				int ind = i;
-      				for (unsigned int l=0;l<palabra.length();l++,ind++){
-  	    				if((sopa.matriz.getElemento(ind,j) != sopa.matriz.get_Valor_Defecto()) && (sopa.matriz.getElemento(ind,j) != palabra_char[l]) && (sopa.matriz.getElemento(ind,j) != '\0')){
-  	    					puedeInsertarse=false;
-  	    				}
-  			    	}
-  			    	if(puedeInsertarse)
-  				    	for (unsigned int l=0;l<palabra.length();l++,i++){
-  		    				sopa.matriz.append(i,j,palabra_char[l]);
-  				    	}
-  			    }
-      			else if (d == "dd"){ // diagonal abajo derecha
-      				int indi = i;
-      				int indj = j;
-      				for (unsigned int l=0;l<palabra.length();l++,indi++,indj++){
-  	    				if((sopa.matriz.getElemento(indi,indj) != sopa.matriz.get_Valor_Defecto()) && (sopa.matriz.getElemento(indi,indj) != palabra_char[l])){
-  	    					puedeInsertarse=false;
-  	    				}
-  			    	}
-  			    	if(puedeInsertarse)
-  				    	for (unsigned int l=0;l<palabra.length();l++,i++,j++){
-  		    				sopa.matriz.append(i,j,palabra_char[l]);
-  				    	}
-  			    }
-      			else if (d == "di"){ // diagonal abajo izquierda
-      				int indi = i;
-      				int indj = j;
-      				for (unsigned int l=0;l<palabra.length();l++,indi++,indj--){
-  	    				if((sopa.matriz.getElemento(indi,indj) != sopa.matriz.get_Valor_Defecto()) && (sopa.matriz.getElemento(indi,indj) != palabra_char[l])){
-  	    					puedeInsertarse=false;
-  	    				}
-  			    	}
-  			    	if(puedeInsertarse){
-  				    	for (unsigned int l=0;l<palabra.length();l++,i++,j--){
-  		    				sopa.matriz.append(i,j,palabra_char[l]);
-  				    	}
-
-  				    }
-  			    }
-
-  				delete[] palabra_char;
-
-  			}
-
-  		    return is;
-  		}
+        while(is >> fil >> col >> direccion >> palabra){
+          if(s.Esta_Palabra(palabra, fil, col, direccion)){}
+        }
+        return is;
+      }
   };
 
   #endif
