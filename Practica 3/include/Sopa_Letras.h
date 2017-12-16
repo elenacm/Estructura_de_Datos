@@ -52,63 +52,57 @@ class Sopa_Letras{
   private:
     string titulo; /**< Título de la sopa de letras */
     Matriz_Dispersa<char> matriz; /**< Matriz Dispersa */
-    Matriz_Dispersa<bool> acertadas; /**< matriz para ver las palabras acertadas */
+    Matriz_Dispersa<char> acertadas; /**< matriz para ver las palabras acertadas */
     list<string> palabras_ocultas; /**< palabras cargadas */
     queue<string> palabras_descubiertas; /**< palabras acertadas() */
-    int nAcertadas; /**< numero de palabras acertadas */
-    int nPendientes; /**< numero de palabras pendientes */
 
   public:
 
     /**
       * @brief Constructor por defecto
       * Crea un objeto de la clase Sopa de Letras
-      *
       */
     Sopa_Letras();
 
     /**
       * @brief Obtiene el numero de palabras ocultas
-      *
       */
     int Numero_Palabras(){ return palabras_ocultas.size(); }
 
     /**
       * @brief Obtiene el tamaño de la matriz
-      *
       */
     int size(){ return matriz.size(); }
 
     /**
       * @brief Obtiene el nombre de la sopa de letras
-      *
       */
     string getTitulo(){ return titulo; }
 
     /**
       * @brief Obtiene la mayor columna
-      *
       */
     int getMayor_Columna(){ return matriz.getMayor_Columna(); }
 
     /**
-      * @brief Obtiene el numero #include "Matriz_Dispersa.h"total de columnas
-      *
+      * @brief Obtiene el numero total de columnas
       */
     int getColumnas(){ return matriz.getColumnas(); }
 
     /**
       * @brief Obtiene el numero de palabras acertadas
-      *
       */
-    int getAcertadas(){ return nAcertadas; }
+    int getAcertadas(){ return palabras_descubiertas.size(); }
 
     /**
-      * @brief Obtiene el numero de palabras pendientes
-      *
+      * @brief Obtiene el numero de palabras ocultas
       */
-    int getPendientes(){ return nPendientes; }
-    void SetNombre(string n);
+    int getPendientes(){ return palabras_ocultas.size(); }
+
+    /**
+      * @brief Modifica el titulo de la sopa de letras
+      */
+    void SetTitulo(string n){ titulo = n; }
 
     /**
       * @brief Comprueba si ha acertado una palabra
@@ -117,17 +111,15 @@ class Sopa_Letras{
 		  * @param j la columna en la que empieza
 		  * @param d la dirección en que debe leerse
       * @return devuelve si la palabra esta en la sopa de letras
-      *
       */
     bool Esta_Palabra(string p, int i, int j,string d);
 
   	/**
-  		* @brief Incluir una palabra en la lista de acertadas
+  		* @brief Incluir una palabra en la matriz
   		* @param p La palabra a incluir
       * @param i fila
       * @param j columna
       * @param d direccion en la que se encuentra la palabra
-      *
   		*/
   	void Poner_Palabra(string p, int i, int j, string d){ palabras_descubiertas.push(p); }
 
@@ -135,12 +127,27 @@ class Sopa_Letras{
     	* @brief Comprueba que la sucesión de letras que ha introducido corresponde a una palabra de la lista
   		* @param palabra La palabra que se quiere comprobar
       * @return Devuelve si la palabra esta en la lista
-      *
   		*/
 		bool Esta_EnLista(string palabra);
-    void Colocar(string w, int i, int j, string d);
-    void Poner_Acertada(string w, int row, int col, string d);
-    void ColocarResueltas(string w, int i, int j, string d);
+
+    /**
+      *
+      */
+    void Colocar(string p, int i, int j, string d);
+
+    /**
+      *
+      */
+    void Poner_Acertada(string p, int row, int col, string d);
+
+    /**
+      * @brief Coloca una palabra en la matriz de acertadas
+      * @param p palabra que se ha acertado
+      * @param i fila
+      * @param j columna
+      * @param d direccion en que se va a colocar la palabra
+      */
+    void Colocar_Acertada(string p, int i, int j, string d);
 
 
     /**
@@ -156,23 +163,19 @@ class Sopa_Letras{
   		* @param sopa la referencia al objeto que llama al método
   		*/
 		friend ostream & operator<<(ostream & s, Sopa_Letras & sopa){
-  			if(sopa.matriz.getMenor_Columna() < 0 || sopa.matriz.getMenor_Columna() > 9)
-  				s << "";
-  			else
-  				s << "";
+  			s << "Titulo: " << sopa.getTitulo() << endl << flush;
+        s << "Numero de palabras ocultas -> " << sopa.getPendientes() << endl;
+        s << "Palabras descubiertas -> " << sopa.getAcertadas() << endl;
 
-  			s << " Titulo: " << sopa.getTitulo() << endl << flush;
-        s << " Numero de palabras ocultas -> " << sopa.getPendientes() << endl;
-        s << " Palabras descubiertas -> " << sopa.getAcertadas() << endl;
-
-        s << "    " << flush;
+        s << "  " << flush;
   			for(int i=sopa.matriz.getMenor_Columna();i<=sopa.matriz.getMayor_Columna();i++){
   				if(i<10 || i<0)
-  					s << i << "  ";
+  					s << " " << i << "";
   				else
-  					s << i << " ";
+  					s << "  " << i << " ";
   			}
   			s << '\n';
+
   			for(int i=sopa.matriz.getMenor_Fila();i<=sopa.matriz.getMayor_Fila();i++){
   				if(i < 0 || i > 9)
   					s << i << "|" << flush;
@@ -181,7 +184,7 @@ class Sopa_Letras{
   				for(int j=sopa.matriz.getMenor_Columna();j<=sopa.matriz.getMayor_Columna();j++){
   					if(sopa.matriz.getElemento(i,j) != sopa.matriz.get_Valor_Defecto()){
   						if(sopa.matriz.getElemento(i,j) != '\0'){
-  							s << " " << sopa.matriz.getElemento(i,j) << " ";
+  							s << " " <<(char)(toupper(sopa.matriz.getElemento(i,j))) << " ";
               }
   						else
   							s << " " << sopa.matriz.getElemento(i,j) << " ";
@@ -208,7 +211,7 @@ class Sopa_Letras{
         s.matriz.getMatriz().clear();
 
         getline(is, nombre);
-        s.SetNombre(nombre);
+        s.SetTitulo(nombre);
 
         while(is >> fil >> col >> direccion >> palabra){
           if(s.Esta_Palabra(palabra, fil, col, direccion)){}

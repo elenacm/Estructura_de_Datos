@@ -93,10 +93,8 @@ Diccionario Diccionario::ObtainPalabrasconDeficionContiene(string palabra){
         n_dir = rand()%6; //Elijo una de las 6 opciones que van desde 0 a 5
 
         int cont=0;
-        for(direccion=direcciones.begin(); cont<n_dir; direccion++){
+        for(direccion=direcciones.begin(); cont<n_dir; direccion++)
           cont++;
-        }
-        cout  << (*it).first << "-" << fil << "-" << col << "-" << *direccion << endl;
       }while(!sopa.Esta_Palabra((*it).first, fil, col-1, *direccion));
 
       sopa.addPalabra((*it).first, fil, col-1, *direccion);

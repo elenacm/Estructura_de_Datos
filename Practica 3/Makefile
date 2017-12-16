@@ -28,7 +28,7 @@ $(OBJ)/Sopa_Letras.o: $(SRC)/Sopa_Letras.cpp $(INC)/Sopa_Letras.h $(INC)/Matriz_
 
 # ************ Limpieza ************
 clean :
-	-rm $(OBJ)/* $(SRC)/*~ $(INC)/*~ ./*~
+	-rm $(OBJ)/* $(BIN)/*
 
 mrproper : clean
 	-rm $(BIN)/* doc/html/*
