@@ -80,10 +80,8 @@ template <class T>
     public:
 
       /**
-        *
         * @brief Constructor por defecto
-        * Crea un objeto de la clase Matriz Dispersa con valor por defecto '0'
-        *
+        * @return Crea un objeto de la clase Matriz Dispersa con valor por defecto '0'
         */
       Matriz_Dispersa();
 
@@ -200,11 +198,6 @@ template <class T>
         *
         */
       bool estaAcertada(int fila, int columna);
-
-      /**
-        *
-        */
-      void ponerAcertada(int fila, int columna);
 
       /**
     		* @brief Sobrecarga del operador <<

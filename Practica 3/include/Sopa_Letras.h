@@ -169,10 +169,10 @@ class Sopa_Letras{
 
         s << "  " << flush;
   			for(int i=sopa.matriz.getMenor_Columna();i<=sopa.matriz.getMayor_Columna();i++){
-  				if(i<10 || i<0)
+  				if(i>10 || i<0)
   					s << " " << i << "";
   				else
-  					s << "  " << i << " ";
+  					s << "  " << i << "";
   			}
   			s << '\n';
 
@@ -183,11 +183,11 @@ class Sopa_Letras{
   					s << i << " |" << flush;
   				for(int j=sopa.matriz.getMenor_Columna();j<=sopa.matriz.getMayor_Columna();j++){
   					if(sopa.matriz.getElemento(i,j) != sopa.matriz.get_Valor_Defecto()){
-  						if(sopa.matriz.getElemento(i,j) != '\0'){
-  							s << " " <<(char)(toupper(sopa.matriz.getElemento(i,j))) << " ";
+  						if(sopa.acertadas.getElemento(i,j) != '\0'){
+  							s << " " << "\e[1m" <<(char)(toupper(sopa.matriz.getElemento(i,j))) << "\e[0m" << " ";
               }
   						else
-  							s << " " << sopa.matriz.getElemento(i,j) << " ";
+  							s << " " << (char)(toupper(sopa.matriz.getElemento(i,j))) << " ";
   					} else {
   						char aleatorio = 65 + rand() % (90-65);
               s << " " << aleatorio << " " << flush;

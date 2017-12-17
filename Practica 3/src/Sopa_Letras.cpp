@@ -1,7 +1,6 @@
 /**
   * @file Sopa_Letras.cpp
   * @brief Implementación de la sopa de letras
-  *
   */
 #include <iostream>
 #include <string>

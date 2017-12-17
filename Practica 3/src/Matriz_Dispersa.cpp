@@ -69,8 +69,6 @@ void Matriz_Dispersa<T>::append(int i, int j, T valor){
     t.col = j;
     t.d = valor;
     m.push_back(t);
-
-    m.sort();
   }
 }
 
@@ -81,24 +79,10 @@ bool Matriz_Dispersa<T>::estaAcertada(int fila,int columna){
 
   for(it=m.begin();it != m.end();it++){
     if((*it).fila == fila && (*it).col == columna){
-
-      return (*it).acertada;
+      return true;
     }
   }
   return false;
-}
-
-//Poner una palabra como acertada
-template<class T>
-void Matriz_Dispersa<T>::ponerAcertada(int fila, int columna){
-  typename list<tripleta<T>>::iterator it;
-
-  for(it=m.begin();it != m.end();it++){
-    if((*it).fila == fila && (*it).col == columna){
-
-      (*it).acertada=true;
-    }
-  }
 }
 
 //Consultor del elemento (i,j)
