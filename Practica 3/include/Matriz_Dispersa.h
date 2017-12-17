@@ -20,6 +20,10 @@ struct tripleta{
   int col; /**< columna */
   T d; /**< dato */
 
+  /**
+    * @brief Operador menor
+    * @return Devuelve si una fila o columna es menor o igual que otra
+    */
   bool operator<(tripleta<T>& a){
     if(this->fila < a.fila)
     return true;
@@ -29,6 +33,9 @@ struct tripleta{
     return false;
   }
 
+  /**
+    * @brief operador de salida de la tripleta
+    */
   friend ostream & operator<<(ostream &os, tripleta<T>& t){
     os << t.d;
     return os;
@@ -83,121 +90,111 @@ template <class T>
         * @brief Constructor por defecto
         * @return Crea un objeto de la clase Matriz Dispersa con valor por defecto '0'
         */
-      Matriz_Dispersa();
-
-      Matriz_Dispersa(T valor);
+      Matriz_Dispersa(){}
 
       /**
-        *
+        * @brief Constructor con un parametro
+        * @param valor Valor por defecto de la matriz
+        * @return Crea una Matriz_Dispersa con valor por defecto el valor
+        */
+      Matriz_Dispersa(T valor){ valor_defecto = valor; }
+
+      /**
         * @brief Modifica el valor por defecto
         * @param dato es el valor por defecto
-        *
         */
       void setValorDefecto(const T &dato){ valor_defecto = dato; }
 
+      /**
+        * @brief Constructor de la clase
+        * @param i fila del elemento
+        * @param j columna del elemento
+        * @return pair<bool, int>, sera true si lo encontra y en ese caso devolverá
+        *         la posicion del elemento, sino false y el centro del vector
+        */
       pair<bool, typename list<tripleta<T>>::iterator> posicion_indice(int i, int j);
 
       /**
-        *
-        * @brief Devuelve el numero de elementos del vector
-        *
+        * @brief Devuelve el tamaño de m
         */
       int size(){ return m.size(); }
 
       /**
-      *   @brief borrar
-      *   @fila  fila del elemento de la matriz que queremos borrar
-      *   @col   columna del elemento de la matriz que queremos borrar
-      *   metodo que elimina un elemento de la matriz dandole una posicion de columna y de fila
-      */
+        * @brief Borra un elemento determinado
+        * @param fila del elemento de la matriz que queremos borrar
+        * @param columna del elemento de la matriz que queremos borrar
+        */
       void borrar(int fila,int col);
 
       /**
-        *
         * @brief Obtiene el elemento de la posición fil,col
         * @param fil fila
         * @param col columna
         * @return Devuelve el objeto por copia
-        *
         */
       T getElemento(int fil, int col);
 
       /**
-        *
         * @brief Obtiene la menor fila
         * @return Devuelve la posicion de la menor fila
-        *
         */
       int getMenor_Fila();
 
       /**
-        *
         * @brief Obtiene la mayor fila
         * @return Devuelve la posicion de la mayor fila
-        *
         */
       int getMayor_Fila();
 
       /**
-        *
         * @brief Obtiene la menor columna
         * @return Devuelve la posicion de la menor columna
-        *
         */
       int getMenor_Columna();
 
       /**
-        *
+
         * @brief Obtiene la mayor columna
         * @return Devuelve la posicion de la mayor columna
-        *
         */
       int getMayor_Columna();
 
       /**
-        *
-        * @brief Devuelve el valor por defecto
-        *
+        * @brief Consultor del valor por defecto
+        * @return Devuelve el valor por defecto
         */
-      T get_Valor_Defecto();
+      T get_Valor_Defecto(){ return valor_defecto; }
 
       /**
-        *
         * @brief Obtiene el numero de casillas sin valor por defecto
-        *
         */
       int Casillas_Sin_Valor_Defecto();
 
-      list<tripleta<T>> getMatriz();
+      /**
+        * @brief Consultor de m
+        * @return Devuelve la lista que contiene todas las tripletas de la matriz
+        */
+      list<tripleta<T>> getMatriz(){ return m; }
 
       /**
-        *
-        * @brief Obtiene el número de filas
-        *
+        * @brief Consultor de las filas
+        * @return Devuleve el numero de filas de la matriz
         */
       int getFilas();
 
       /**
-        *
-        * @brief Obtiene el número de columnas
-        *
+        * @brief Consultor de las columnas
+        * @return Devuelve el numero de columnas
         */
       int getColumnas();
 
       /**
-        *
         * @brief Coloca un elemento en la fila i y la columna j
         * @param i es la fila
         * @param j es la columna
         * @param valor Valor que introducimos
-        *
         */
       void append(int i, int j, T valor);
-
-      /**
-        *
-        */
-      bool estaAcertada(int fila, int columna);
 
       /**
     		* @brief Sobrecarga del operador <<
@@ -291,7 +288,7 @@ template <class T>
 
       /**
   		 * @brief Inicializa un iterator al comienzo de la matriz
-  		 * */
+  		 */
   		 iterator begin(){
   			 iterator i;
   			 i.it=m.begin();
@@ -301,7 +298,7 @@ template <class T>
 
   		/**
   		 * @brief Inicializa un iterator al final de la matriz
-  		 * */
+  		 */
   		 iterator end(){
          iterator i;
          i.it=m.end();
