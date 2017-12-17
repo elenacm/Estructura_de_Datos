@@ -60,42 +60,49 @@ class Sopa_Letras{
 
     /**
       * @brief Constructor por defecto
-      * Crea un objeto de la clase Sopa de Letras
+      * @return Crea un objeto de la clase Sopa de Letras
       */
-    Sopa_Letras();
+    Sopa_Letras(){}
 
     /**
-      * @brief Obtiene el numero de palabras ocultas
+      * @brief Consultor de las palabras ocultas
+      * @return Devuelve el tamaño de las palabras_ocultas
       */
     int Numero_Palabras(){ return palabras_ocultas.size(); }
 
     /**
-      * @brief Obtiene el tamaño de la matriz
+      * @brief Consultor del tamaño de la matriz
+      * @return Devuelve el tamaño de la matriz
       */
     int size(){ return matriz.size(); }
 
     /**
-      * @brief Obtiene el nombre de la sopa de letras
+      * @brief Consultor del nombre de la sopa de letras
+      * @return devuelve el nombre
       */
     string getTitulo(){ return titulo; }
 
     /**
-      * @brief Obtiene la mayor columna
+      * @brief Consultor de la mayor columna
+      * @return Devuelve la mayor columna de la matriz
       */
     int getMayor_Columna(){ return matriz.getMayor_Columna(); }
 
     /**
-      * @brief Obtiene el numero total de columnas
+      * @brief Consultor de las columnas
+      * @return Devuelve el numero total de las columnas de la matriz
       */
     int getColumnas(){ return matriz.getColumnas(); }
 
     /**
-      * @brief Obtiene el numero de palabras acertadas
+      * @brief Consultor de las palabras acertadas
+      * @return Devuelve el tamaño de las palabras acertadas
       */
     int getAcertadas(){ return palabras_descubiertas.size(); }
 
     /**
-      * @brief Obtiene el numero de palabras ocultas
+      * @brief Consultor de las palabras ocultas
+      * @return Devuelve el tamaño de las palabras ocultas
       */
     int getPendientes(){ return palabras_ocultas.size(); }
 
@@ -114,29 +121,21 @@ class Sopa_Letras{
       */
     bool Esta_Palabra(string p, int i, int j,string d);
 
-  	/**
-  		* @brief Incluir una palabra en la matriz
-  		* @param p La palabra a incluir
-      * @param i fila
-      * @param j columna
-      * @param d direccion en la que se encuentra la palabra
-  		*/
-  	void Poner_Palabra(string p, int i, int j, string d){ palabras_descubiertas.push(p); }
-
     /**
-    	* @brief Comprueba que la sucesión de letras que ha introducido corresponde a una palabra de la lista
-  		* @param palabra La palabra que se quiere comprobar
-      * @return Devuelve si la palabra esta en la lista
-  		*/
-		bool Esta_EnLista(string palabra);
-
-    /**
-      *
+      * @brief Metodo para colocar una palabra en la matriz
+      * @param p palara que se va a colocar
+      * @param i fila en la que se va a introducir
+      * @param j columna en la que se va a introducir
+      * @param d direccion en la que se va a colocar la palabra
       */
-    void Colocar(string p, int i, int j, string d);
+    bool addPalabra(string p, int i, int j, string d);
 
     /**
-      *
+      * @brief Metodo que cambia una palabra oculta a descubierta
+      * @param p palabra que se va a colocar
+      * @param row fila en la que se va a introducir
+      * @param col columna en la que se va a introducir
+      * @param d direccion en la que se va a colocar la palabra
       */
     void Poner_Acertada(string p, int row, int col, string d);
 
@@ -148,13 +147,6 @@ class Sopa_Letras{
       * @param d direccion en que se va a colocar la palabra
       */
     void Colocar_Acertada(string p, int i, int j, string d);
-
-
-    /**
-      * @brief
-      * @param
-      */
-    bool addPalabra(string palabra, int i, int j, string d);
 
 		/**
   		* @brief Sobrecarga del operador <<
@@ -205,16 +197,16 @@ class Sopa_Letras{
   		* @param is el flujo de entrada
   		* @param sopa la referencia al objeto que llama al método
   		*/
-  		friend istream& operator>>(istream& is, Sopa_Letras &s){
+  		friend istream& operator>>(istream& is, Sopa_Letras &sopa){
         string nombre, direccion, palabra;
         int fil, col;
-        s.matriz.getMatriz().clear();
+        sopa.matriz.getMatriz().clear();
 
         getline(is, nombre);
-        s.SetTitulo(nombre);
+        sopa.SetTitulo(nombre);
 
         while(is >> fil >> col >> direccion >> palabra){
-          if(s.Esta_Palabra(palabra, fil, col, direccion)){}
+          if(sopa.Esta_Palabra(palabra, fil, col, direccion)){}
         }
         return is;
       }
