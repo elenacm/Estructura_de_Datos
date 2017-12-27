@@ -27,11 +27,27 @@ list<set<string> > Ontologias::GetSuperPalabra(const string & palabra,const stri
 }
 
 string Ontologias::GetDefinicion(int pos){
+  string n = "nada";
+  map<int,string>::iterator it;
 
+  for(it = significados.begin(); it != significados.end(); it++){
+    if((*it).first == pos)
+      return (*it).second;
+  }
+
+  return n;
 }
 
 bool Ontologias::lee_significados(const char * fich_sig){
+  pair<int,string> insertado;
+  ifstream f(fich_sig);
 
+  while(!f.eof()){
+    getline(f, insertado.first, ' ');
+    getline(f, insertado.second, '\n');
+
+    significados.insert(insertado);
+  }
 }
 
 bool Ontologias::Lee(const char * fich_jerarquia,cons char * fic_significados){
