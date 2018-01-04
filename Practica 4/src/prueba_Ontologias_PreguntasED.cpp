@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Ontologias.h"
-#include "PreguntasED.h"
+//#include "PreguntasED.h"
 using namespace std;
 
 
@@ -11,7 +11,7 @@ int main(int argc, char * argv[]){
     cout<<"Dime el fichero con los significados"<<endl; //significados.txt
     return 0;
  }
- //Seccion 1: probando el arbol 
+ //Seccion 1: probando el arbol
   ifstream f (argv[1]);
  ArbolGeneral<pair<set<string>,int> > ab;
  f>>ab;
@@ -25,26 +25,28 @@ int main(int argc, char * argv[]){
     set<string>::iterator sit=aux.first.begin();
     while (sit!=aux.first.end()){
         cout<<*sit<<", ";++sit;
-    }   
+    }
     cout<<endl;
-    
+
    }
- }  
+ }
+ return 0;
+ }
  //Seccion 2: probando Ontologias
- Ontologias Ot;
- //Lee la estructura jerarquica de las palabras y sus 
+ /*                                       Ontologias Ot;
+ //Lee la estructura jerarquica de las palabras y sus
  //significados.
  Ot.Lee(argv[1],argv[2]);
- 
+
  //comprobar que es correcta la lectura escribiendo ontologias.
  string test_salida1=argv[1]+"back";
  string test_salida2=argv[2]+"back";
  Ot.Escribe(test_salida1.c_str(),test_salida2.c_str());
- 
+
  int level;
  cout<<"Dime un nivel de tematica (1),(2),(3)"<<endl;
  cin>>level;
- 
+
  cout<< "Las temáticas posibles a nivel"<<level<<" son:"<<endl;
  Ontologias::iterator_level itl;
  int cnt=1;
@@ -59,14 +61,14 @@ int main(int argc, char * argv[]){
    cout<<endl;
  }
  cin.get();cin.get();
- 
+
  //Seccion 3: probando preguntasED
- 
+
  cout<<"Test PreguntasED************************************"<<endl;
- 
+
  PreguntasED Ask(Ot);
  Ask.MuestraTematicas();
- 
+
  cout<<"Escoge una de las tematicas posibles:";
  int ntema;
  cin>>ntema;
@@ -87,7 +89,5 @@ int main(int argc, char * argv[]){
      else
         cout<<"NO es correcta la contestacion es cualquiera de las palabras: "<<p.first<<endl;
      ++i;
- }     
- 
-  
-}  
+ }
+ */

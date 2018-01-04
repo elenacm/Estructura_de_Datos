@@ -12,10 +12,20 @@ all:$ $(BIN)/prueba_Ontologias_PreguntasED
 documentacion:
 	doxygen doc/doxys/Doxyfile
 
-	
+
 # ************ Compilación de módulos ************
 
+$(BIN)/prueba_Ontologias_PreguntasED: $(OBJ)/prueba_Ontologias_PreguntasED.o $(OBJ)/ontologias.o
+	$(CXX) -o $(BIN)/prueba_Ontologias_PreguntasED $(OBJ)/prueba_Ontologias_PreguntasED.o $(OBJ)/ontologias.o
 
+$(OBJ)/prueba_Ontologias_PreguntasED.o: $(SRC)/prueba_Ontologias_PreguntasED.cpp $(INC)/Ontologias.h
+	$(CXX) $(CPPFLAGS) $(SRC)/prueba_Ontologias_PreguntasED.cpp -o $(OBJ)/prueba_Ontologias_PreguntasED.o
+
+$(OBJ)/ontologias.o: $(SRC)/Ontologias.cpp $(INC)/Ontologias.h $(INC)/ArbolGeneral.h $(INC)/ArbolGeneral.cpp
+	$(CXX) $(CPPFLAGS) $(SRC)/Ontologias.cpp -o $(OBJ)/ontologias.o
+
+$(OBJ)/preguntas.o: $(SRC)/PreguntasED.cpp $(INC)/PreguntasED.h $(INC)/Ontologias.h
+	$(CXX) $(CPPFLAGS) $(SRC)/PreguntasED.cpp -o $(OBJ)/PreguntasED.o
 
 # ************ Limpieza ************
 clean :
