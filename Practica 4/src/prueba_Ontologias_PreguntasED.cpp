@@ -4,6 +4,32 @@
 //#include "PreguntasED.h"
 using namespace std;
 
+istream & eliminarEspacios(istream & is){
+
+  while(is.eof()){
+    if(isspace(is.peek()) || is.peek() == '\n')
+      is.get();
+  }
+
+  return is;
+}
+
+istream& operator>>(istream& is, pair<set<string>,int>& mypair){
+  int n;
+  is >> n;
+
+  eliminarEspacios(is);
+
+  char palabra[100];
+  for(int i = 0; i < n; i++){
+    is.getline(palabra, 100, ',');
+    mypair.first.insert(palabra);
+  }
+
+  is >> mypair.second;
+
+  return is;
+}
 
 int main(int argc, char * argv[]){
  if (argc!=3){
@@ -12,7 +38,7 @@ int main(int argc, char * argv[]){
     return 0;
  }
  //Seccion 1: probando el arbol
-  ifstream f (argv[1]);
+ fstream f(argv[1]);
  ArbolGeneral<pair<set<string>,int> > ab;
  f>>ab;
   ArbolGeneral<pair<set<string>,int> >::iter_preorden it;
