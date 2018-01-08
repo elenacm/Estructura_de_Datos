@@ -56,17 +56,16 @@ int main(int argc, char * argv[]){
 
    }
  }
- return 0;
- }
+
  //Seccion 2: probando Ontologias
- /*                                       Ontologias Ot;
+ Ontologias Ot;
  //Lee la estructura jerarquica de las palabras y sus
  //significados.
  Ot.Lee(argv[1],argv[2]);
 
  //comprobar que es correcta la lectura escribiendo ontologias.
- string test_salida1=argv[1]+"back";
- string test_salida2=argv[2]+"back";
+ string test_salida1=argv[1];
+ string test_salida2=argv[2];
  Ot.Escribe(test_salida1.c_str(),test_salida2.c_str());
 
  int level;
@@ -87,9 +86,10 @@ int main(int argc, char * argv[]){
    cout<<endl;
  }
  cin.get();cin.get();
+ }
 
  //Seccion 3: probando preguntasED
-
+/*
  cout<<"Test PreguntasED************************************"<<endl;
 
  PreguntasED Ask(Ot);
