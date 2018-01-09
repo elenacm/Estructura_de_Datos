@@ -678,6 +678,4 @@ class ArbolGeneral{
 
 #include "ArbolGeneral.cpp"
 
-
-
 #endif

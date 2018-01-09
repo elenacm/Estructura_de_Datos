@@ -1,6 +1,4 @@
 #include "Ontologias.h"
-#include "ArbolGeneral.h"
-#include <fstream>
 using namespace std;
 
 pair<bool, Ontologias::const_iterator> Ontologias::Esta(const string &o)const{
@@ -79,28 +77,21 @@ string Ontologias::GetDefinicion(int pos){
   return n;
 }
 
-istream& operator>>(istream& is, map<int,string>& mimap){
+bool Ontologias::lee_significados(const char * fich_sig){
+  ifstream f(fich_sig);
+  map<int,string>::iterator it_map;
+  bool leido = false;
   char espacio;
   string def;
   int numero;
-  map<int,string>::iterator it_map;
-
-  for(it_map = mimap.begin(); it_map != mimap.end(); ++it_map){
-    is >> numero;
-    is >> espacio;
-    getline(is, def, '\n');
-    mimap.insert(pair<int,string>(numero,def));
-  }
-
-  return is;
-}
-
-bool Ontologias::lee_significados(const char * fich_sig){
-  ifstream f(fich_sig);
-  bool leido = false;
 
   while(!f.eof()){
-    f >> significados;
+    for(it_map = significados.begin(); it_map != significados.end(); ++it_map){
+      f >> numero;
+      f >> espacio;
+      getline(f, def, '\n');
+      significados.insert(pair<int,string>(numero,def));
+    }
     leido = true;
   }
 
@@ -123,22 +114,11 @@ bool Ontologias::Lee(const char * fich_jerarquia,const char * fic_significados){
 bool Ontologias::Escribe(const char * fich_jerarquia,const char * fic_significados){
   bool escrito = false;
   map<int, string>::iterator it_map;
-  set<string>::const_iterator it_set;
-  iterator it;
   fstream fj(fich_jerarquia);
   fstream fs(fic_significados);
 
   while(!fj.eof()){
-    for(it = begin(); it != end(); ++it){
-      fj << (*it).second;
-      //como escribir las x
-      fj << "n";
-      fj << (*it).first.size() << " ";
-      for(it_set = (*it).first.begin(); it_set != (*it).first.end(); ++it_set){
-        fj << (*it_set) << flush;
-        fj << ",";
-      }
-    }
+    fj << ab;
     escrito = true;
   }
 

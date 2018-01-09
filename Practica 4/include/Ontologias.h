@@ -1,5 +1,6 @@
 #ifndef __ONTOLOGIAS__H
 #define __ONTOLOGIAS__H
+#include "sobrecargas.h"
 #include "ArbolGeneral.h"
 #include <fstream>
 #include <iostream>
@@ -9,9 +10,7 @@
 using namespace std;
 /**
  * @file Ontologias.h: TDA Ontologias
- *
  */
-
 
 /**
    @brief T.D.A.Ontologias
@@ -32,7 +31,6 @@ using namespace std;
    @author
    @date
 */
-
 
 class Ontologias{
   /**

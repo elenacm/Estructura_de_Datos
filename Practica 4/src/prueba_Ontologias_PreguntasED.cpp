@@ -4,33 +4,6 @@
 //#include "PreguntasED.h"
 using namespace std;
 
-istream & eliminarEspacios(istream & is){
-
-  while(is.eof()){
-    if(isspace(is.peek()) || is.peek() == '\n')
-      is.get();
-  }
-
-  return is;
-}
-
-istream& operator>>(istream& is, pair<set<string>,int>& mypair){
-  int n;
-  is >> n;
-
-  eliminarEspacios(is);
-
-  char palabra[100];
-  for(int i = 0; i < n; i++){
-    is.getline(palabra, 100, ',');
-    mypair.first.insert(palabra);
-  }
-
-  is >> mypair.second;
-
-  return is;
-}
-
 int main(int argc, char * argv[]){
  if (argc!=3){
     cout<<"Dime el fichero con la estructura jerarquica de las palabras"<<endl;//Arbol_Ontologias.txt
