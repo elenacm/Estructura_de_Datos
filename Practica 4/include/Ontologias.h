@@ -27,7 +27,6 @@ using namespace std;
    "capital", en el siguiente "seat", etc.
    <tt>\#include Ontologias.h</tt>
 
-
    @author
    @date
 */
@@ -71,7 +70,6 @@ class Ontologias{
     class const_iterator;
     /**************/
 
-
     /**
      * @brief Devuelve si una palabra  esta en el conjunto. Si esta devuelve un iterador a el
      * @param o: palabra a buscar
@@ -93,8 +91,6 @@ class Ontologias{
     */
     map<string,set<string> > GetSinonimos(const string & palabra)const;
 
-
-
     /**
      * @brief Devuelve  todas las tematícas (con sus sinonimos) hasta la temática raiz de una palabra con un significado concreto.
      * @param palabra: palabra a buscar
@@ -113,7 +109,6 @@ class Ontologias{
      */
     string GetDefinicion(int pos);
 
-
     /**
     @brief Lectura de los Significados de un fichero
     @param fich_sig: nombre del fichero con los signficados
@@ -121,7 +116,6 @@ class Ontologias{
     se corresponde con el índice del significado de una palabra final.
     */
     bool lee_significados(const char * fich_sig);
-
 
     /**
      * @brief Lee el las palabras descritas en forma jerarquica en temáticas y sus significados.
@@ -137,7 +131,6 @@ class Ontologias{
      * @param fich_significados: nombre del fichero que almacenará  los significados.
     */
     bool Escribe(const char * fich_jerarquia,const char * fic_significados);
-
 
     /**
      * @brief Numero de palabras finales.

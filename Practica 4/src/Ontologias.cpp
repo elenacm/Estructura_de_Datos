@@ -1,4 +1,5 @@
 #include "Ontologias.h"
+#include <iostream>
 using namespace std;
 
 pair<bool, Ontologias::const_iterator> Ontologias::Esta(const string &o)const{
@@ -100,6 +101,7 @@ bool Ontologias::lee_significados(const char * fich_sig){
 
 bool Ontologias::Lee(const char * fich_jerarquia,const char * fic_significados){
   bool leido = false;
+  cout << "hola";
   fstream fj(fich_jerarquia);
 
   while(!fj.eof()){

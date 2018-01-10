@@ -1,8 +1,10 @@
 #ifndef __ArbolGeneral_h__
 #define __ArbolGeneral_h__
 
+#include "sobrecargas.h"
 #include <cassert>
 #include <iostream>
+#include <set>
 using namespace std;
 
 /**
@@ -444,8 +446,6 @@ class ArbolGeneral{
       * la lectura se puede consultar en la función de salida.
       * @see lee_arbol
       */
-
-
     template<class T>
     friend std::istream& operator>>(std::istream& in, ArbolGeneral<T>& v);
     /**

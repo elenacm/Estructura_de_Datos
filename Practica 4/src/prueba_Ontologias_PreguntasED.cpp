@@ -35,6 +35,7 @@ int main(int argc, char * argv[]){
  //Lee la estructura jerarquica de las palabras y sus
  //significados.
  Ot.Lee(argv[1],argv[2]);
+ cout << "hola" << endl;
 
  //comprobar que es correcta la lectura escribiendo ontologias.
  string test_salida1=argv[1];
@@ -59,7 +60,7 @@ int main(int argc, char * argv[]){
    cout<<endl;
  }
  cin.get();cin.get();
- }
+
 
  //Seccion 3: probando preguntasED
 /*
@@ -87,6 +88,5 @@ int main(int argc, char * argv[]){
      }
      else
         cout<<"NO es correcta la contestacion es cualquiera de las palabras: "<<p.first<<endl;
-     ++i;
+     ++i;*/
  }
- */
