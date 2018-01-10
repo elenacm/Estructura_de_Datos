@@ -32,11 +32,13 @@ int main(int argc, char * argv[]){
 
  //Seccion 2: probando Ontologias
  Ontologias Ot;
- //Lee la estructura jerarquica de las palabras y sus
- //significados.
- Ot.Lee(argv[1],argv[2]);
- cout << "hola" << endl;
+ //Lee la estructura jerarquica de las palabras y sus significados.
+ cout << argv[1] << endl;
+ cout << argv[2] << endl;
 
+ Ot.Lee(argv[1],argv[2]);
+
+cout << "fuera" << endl;
  //comprobar que es correcta la lectura escribiendo ontologias.
  string test_salida1=argv[1];
  string test_salida2=argv[2];
@@ -60,7 +62,6 @@ int main(int argc, char * argv[]){
    cout<<endl;
  }
  cin.get();cin.get();
-
 
  //Seccion 3: probando preguntasED
 /*

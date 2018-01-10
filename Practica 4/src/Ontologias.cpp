@@ -79,20 +79,18 @@ string Ontologias::GetDefinicion(int pos){
 }
 
 bool Ontologias::lee_significados(const char * fich_sig){
-  ifstream f(fich_sig);
-  map<int,string>::iterator it_map;
+  fstream f(fich_sig);
   bool leido = false;
   char espacio;
   string def;
   int numero;
 
+  std::cout << "dentro de lee_significados" << std::endl;
   while(!f.eof()){
-    for(it_map = significados.begin(); it_map != significados.end(); ++it_map){
       f >> numero;
       f >> espacio;
       getline(f, def, '\n');
       significados.insert(pair<int,string>(numero,def));
-    }
     leido = true;
   }
 
@@ -100,15 +98,23 @@ bool Ontologias::lee_significados(const char * fich_sig){
 }
 
 bool Ontologias::Lee(const char * fich_jerarquia,const char * fic_significados){
-  bool leido = false;
-  cout << "hola";
   fstream fj(fich_jerarquia);
+  bool leido = false;
 
+  std::cout <<"fstream creado" <<std::endl;
   while(!fj.eof()){
     fj >> ab;
-    if(lee_significados(fic_significados))
+    std::cout << ab.size() << std::endl;
+    if(lee_significados(fic_significados)){
       leido = true;
+    }
   }
+  std::cout << "stream leido" << std::endl;
+
+  if(leido)
+    cout << "Ontologias leidas";
+  else
+    cout << "Ontologias no leidas";
 
   return leido;
 }
@@ -124,6 +130,11 @@ bool Ontologias::Escribe(const char * fich_jerarquia,const char * fic_significad
     escrito = true;
   }
 
+  if(escrito)
+    cout << "Ontologias escritas";
+  else
+    cout << "Ontologias no escritas";
+
   while(!fs.eof()){
     for(it_map = significados.begin(); it_map != significados.end(); ++it_map){
       fs << (*it_map).first;
@@ -132,6 +143,11 @@ bool Ontologias::Escribe(const char * fich_jerarquia,const char * fic_significad
     }
     escrito = true;
   }
+
+  if(escrito)
+    cout << "Significados escritos";
+  else
+    cout << "Significados no escritos";
 
   return escrito;
 }
