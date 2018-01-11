@@ -33,35 +33,35 @@ int main(int argc, char * argv[]){
  //Seccion 2: probando Ontologias
  Ontologias Ot;
  //Lee la estructura jerarquica de las palabras y sus significados.
- cout << argv[1] << endl;
- cout << argv[2] << endl;
-
  Ot.Lee(argv[1],argv[2]);
 
 cout << "fuera" << endl;
+string extension = "back";
  //comprobar que es correcta la lectura escribiendo ontologias.
- string test_salida1=argv[1];
- string test_salida2=argv[2];
+ string test_salida1 = argv[1] + extension;
+ string test_salida2 = argv[2] + extension;
  Ot.Escribe(test_salida1.c_str(),test_salida2.c_str());
 
  int level;
- cout<<"Dime un nivel de tematica (1),(2),(3)"<<endl;
- cin>>level;
+ cout << "Dime un nivel de tematica (1),(2),(3)" << endl;
+ cin >> level;
 
- cout<< "Las temáticas posibles a nivel"<<level<<" son:"<<endl;
+ cout << "Las temáticas posibles a nivel " << level << " son:" << endl;
  Ontologias::iterator_level itl;
- int cnt=1;
- for (itl=Ot.beginl(level);itl!=Ot.endl(); ++itl){
+ int cnt = 1;
+ for (itl = Ot.beginl(level); itl != Ot.endl(); ++itl){
    pair<set<string>,int> aux= *itl;
-   set<string>::iterator sit=aux.first.begin();
-   cout<<"Temática "<<cnt;
+   set<string>::iterator sit = aux.first.begin();
+   cout << "Temática" << cnt << " -> ";
    cnt++;
    while (sit!=aux.first.end()){
-        cout<<*sit<<", ";++sit;
+        cout << *sit << ", ";
+        ++sit;
    }
-   cout<<endl;
+   cout << endl;
  }
- cin.get();cin.get();
+ cin.get();
+ cin.get();
 
  //Seccion 3: probando preguntasED
 /*

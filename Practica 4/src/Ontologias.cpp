@@ -85,12 +85,11 @@ bool Ontologias::lee_significados(const char * fich_sig){
   string def;
   int numero;
 
-  std::cout << "dentro de lee_significados" << std::endl;
   while(!f.eof()){
-      f >> numero;
-      f >> espacio;
-      getline(f, def, '\n');
-      significados.insert(pair<int,string>(numero,def));
+    f >> numero;
+    f >> espacio;
+    getline(f, def, '\n');
+    significados.insert(pair<int,string>(numero,def));
     leido = true;
   }
 
@@ -98,56 +97,35 @@ bool Ontologias::lee_significados(const char * fich_sig){
 }
 
 bool Ontologias::Lee(const char * fich_jerarquia,const char * fic_significados){
-  fstream fj(fich_jerarquia);
-  bool leido = false;
+  ifstream f(fich_jerarquia);
+  bool leido = lee_significados(fic_significados);
 
-  std::cout <<"fstream creado" <<std::endl;
-  while(!fj.eof()){
-    fj >> ab;
-    std::cout << ab.size() << std::endl;
-    if(lee_significados(fic_significados)){
-      leido = true;
-    }
-  }
-  std::cout << "stream leido" << std::endl;
+  f >> ab;
+  //CUENTA LAS PALABRAS FINALES!!!
 
   if(leido)
-    cout << "Ontologias leidas";
+    std::cout << "Todo leído correctamente :)" << std::endl;
   else
-    cout << "Ontologias no leidas";
+    std::cout << "Error de lectura :(" << std::endl;
 
   return leido;
 }
 
 bool Ontologias::Escribe(const char * fich_jerarquia,const char * fic_significados){
-  bool escrito = false;
-  map<int, string>::iterator it_map;
+  map<int,string>::iterator it_map;
   fstream fj(fich_jerarquia);
   fstream fs(fic_significados);
 
-  while(!fj.eof()){
+  if(fj && fs){
     fj << ab;
-    escrito = true;
-  }
-
-  if(escrito)
-    cout << "Ontologias escritas";
-  else
-    cout << "Ontologias no escritas";
-
-  while(!fs.eof()){
     for(it_map = significados.begin(); it_map != significados.end(); ++it_map){
       fs << (*it_map).first;
       fs << " ";
       fs << (*it_map).second << flush;
     }
-    escrito = true;
+
+    return true;
   }
 
-  if(escrito)
-    cout << "Significados escritos";
-  else
-    cout << "Significados no escritos";
-
-  return escrito;
+  return false;
 }
