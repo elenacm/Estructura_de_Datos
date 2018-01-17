@@ -15,17 +15,17 @@ documentacion:
 
 # ************ Compilación de módulos ************
 
-$(BIN)/prueba_Ontologias_PreguntasED: $(OBJ)/prueba_Ontologias_PreguntasED.o $(OBJ)/ontologias.o $(OBJ)/sobrecargas.o
-	$(CXX) -o $(BIN)/prueba_Ontologias_PreguntasED $(OBJ)/prueba_Ontologias_PreguntasED.o $(OBJ)/ontologias.o $(OBJ)/sobrecargas.o
+$(BIN)/prueba_Ontologias_PreguntasED: $(OBJ)/prueba_Ontologias_PreguntasED.o $(OBJ)/ontologias.o $(OBJ)/preguntas.o $(OBJ)/sobrecargas.o
+	$(CXX) -o $(BIN)/prueba_Ontologias_PreguntasED $(OBJ)/prueba_Ontologias_PreguntasED.o $(OBJ)/ontologias.o $(OBJ)/preguntas.o $(OBJ)/sobrecargas.o
 
-$(OBJ)/prueba_Ontologias_PreguntasED.o: $(SRC)/prueba_Ontologias_PreguntasED.cpp $(INC)/Ontologias.h
+$(OBJ)/prueba_Ontologias_PreguntasED.o: $(SRC)/prueba_Ontologias_PreguntasED.cpp $(INC)/Ontologias.h $(INC)/PreguntasED.h
 	$(CXX) $(CPPFLAGS) $(SRC)/prueba_Ontologias_PreguntasED.cpp -o $(OBJ)/prueba_Ontologias_PreguntasED.o
 
 $(OBJ)/ontologias.o: $(SRC)/Ontologias.cpp $(INC)/Ontologias.h
 	$(CXX) $(CPPFLAGS) $(SRC)/Ontologias.cpp -o $(OBJ)/ontologias.o
 
 $(OBJ)/preguntas.o: $(SRC)/PreguntasED.cpp $(INC)/PreguntasED.h
-	$(CXX) $(CPPFLAGS) $(SRC)/PreguntasED.cpp -o $(OBJ)/PreguntasED.o
+	$(CXX) $(CPPFLAGS) $(SRC)/PreguntasED.cpp -o $(OBJ)/preguntas.o
 
 $(OBJ)/sobrecargas.o: $(SRC)/sobrecargas.cpp $(INC)/sobrecargas.h
 	$(CXX) $(CPPFLAGS) $(SRC)/sobrecargas.cpp -o $(OBJ)/sobrecargas.o

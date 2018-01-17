@@ -466,188 +466,179 @@ class ArbolGeneral{
     template<class T>
     friend std::ostream& operator<< (std::ostream& out, const ArbolGeneral<T>& v);
 
-
-
     /**
      * @brief TDA. Iterador en preorden
      * */
     class const_iter_preorden;//declaracion adelantada
     class iter_preorden{
        private:
-	 Nodo it;
-	 Nodo raiz;
-	 int level;
+	        Nodo it;
+	        Nodo raiz;
+	        int level;
        public:
-	 iter_preorden(){
-	    it=0;
-	    raiz=0;
-	    level=-1;
-	 }
-	 Tbase & operator*(){
-	    return it->etiqueta;
-	 }
-	 int getlevel(){
-	   return level;
-	 }
-	 bool Hoja(){
-	    if (it->izqda==0) return true;
-	    return false;
-	 }
-	 Nodo GetNodo (){
-	    return it;
-	 }
-	 iter_preorden padre(){
-	   iter_preorden p=*this;
-	   if (p.it==p.raiz)
-	     p.it=0;
-	   else
-	     p.it = p.it->padre;
-	   return p;
-	 }
+	        iter_preorden(){
+	          it=0;
+	          raiz=0;
+	          level=-1;
+	        }
+	        Tbase & operator*(){
+	           return it->etiqueta;
+	        }
+	        int getlevel(){
+	          return level;
+	        }
+	        bool Hoja(){
+            if (it->izqda==0) return true;
+	          return false;
+	        }
+	        Nodo GetNodo (){
+	          return it;
+	        }
+	        iter_preorden padre(){
+	          iter_preorden p=*this;
+	          if (p.it==p.raiz)
+	           p.it=0;
+	          else
+	           p.it = p.it->padre;
+	          return p;
+	        }
 
-	 iter_preorden & operator ++(){
-	    if (it->izqda!=0){
-	      it= it->izqda;
-	      level = level+1;
-	    }
-	    else{
-		if (it->drcha!=0)
-		  it=it->drcha;
-		else{
-		 if (it->padre!=0){
-		   while  (it->padre!=0 && it->drcha==0){
-		    it=it->padre;
-		    level = level-1;
-		   }
-		   if (it->drcha!=0){
-		     it=it->drcha;
+	        iter_preorden & operator ++(){
+	          if (it->izqda!=0){
+	            it= it->izqda;
+	            level = level+1;
+	          }
+	          else{
+		          if (it->drcha!=0)
+		            it=it->drcha;
+		          else{
+		            if (it->padre!=0){
+		              while(it->padre!=0 && it->drcha==0){
+		                it=it->padre;
+		                level = level-1;
+		              }
+		              if (it->drcha!=0){
+		                it=it->drcha;
+		              }
+		              else{
+		                it=0;
+		                level=-1;
+		              }
+		          }
+		          else{
+		            it=0;
+		            level = -1;
+		          }
+		        }
+	        }
+	        return *this;
+	       }
 
-		   }
-		   else{
-		      it=0;
-		      level=-1;
-		   }
+      	 bool Nulo(){
+      	   return it==0;
+      	 }
+      	 bool operator == (const iter_preorden &i)const{
+      	    return i.raiz ==raiz && it==i.it;
+      	 }
 
-		 }
-		 else{
-		   it=0;
-		   level = -1;
-		 }
-		}
-	    }
+      	 bool operator != (const iter_preorden &i)const{
+      	    return i.raiz !=raiz || it!=i.it;
 
-	    return *this;
-	 }
-
-	 bool Nulo(){
-	   return it==0;
-	 }
-	 bool operator == (const iter_preorden &i)const{
-	    return i.raiz ==raiz && it==i.it;
-	 }
-
-	 bool operator != (const iter_preorden &i)const{
-	    return i.raiz !=raiz || it!=i.it;
-
-	 }
-
-	 friend class ArbolGeneral;
-	 friend class const_iter_preorden;
+      	 }
+      	 friend class ArbolGeneral;
+      	 friend class const_iter_preorden;
     };
     class const_iter_preorden{
        private:
-	  const nodo * it;
-	  const nodo * raiz;
-	 int level;
+      	  const nodo * it;
+      	  const nodo * raiz;
+      	  int level;
        public:
-	 const_iter_preorden(){
-	    it=0;
-	    raiz=0;
-	    level=-1;
-	 }
-	 const_iter_preorden(const iter_preorden &i){
-	    it=i.it;
-	    raiz=i.raiz;
-	    level=i.level;
-	 }
-	 const Tbase & operator*(){
-	    return it->etiqueta;
-	 }
-	 int getlevel(){
-	   return level;
-	 }
-	  bool Hoja(){
-	    if (it->izqda==0) return true;
-	    return false;
-	 }
-	 Nodo GetNodo (){
-	    return it;
-	 }
-	 bool Nulo(){
-	   return it==0;
-	 }
-	 const_iter_preorden padre(){
-	   const_iter_preorden p=*this;
-	   if (p.it==p.raiz)
-	     p.it=0;
-	   else
-	     p.it = p.it->padre;
-	   return p;
-	 }
+        	 const_iter_preorden(){
+        	    it=0;
+        	    raiz=0;
+        	    level=-1;
+        	 }
+        	 const_iter_preorden(const iter_preorden &i){
+        	    it=i.it;
+        	    raiz=i.raiz;
+        	    level=i.level;
+        	 }
+        	 const Tbase & operator*(){
+        	    return it->etiqueta;
+        	 }
+        	 int getlevel(){
+        	   return level;
+        	 }
+        	  bool Hoja(){
+        	    if (it->izqda==0) return true;
+        	    return false;
+        	 }
+        	 Nodo GetNodo (){
+        	    return it;
+        	 }
+        	 bool Nulo(){
+        	   return it==0;
+        	 }
+        	 const_iter_preorden padre(){
+        	   const_iter_preorden p=*this;
+        	   if (p.it==p.raiz)
+        	     p.it=0;
+        	   else
+        	     p.it = p.it->padre;
+        	   return p;
+        	 }
 
+        	 const_iter_preorden & operator ++(){
+        	    if (it->izqda!=0){
+        	      it= it->izqda;
+        	      level = level+1;
+        	    }
+        	    else{
+            		if (it->drcha!=0)
+            		  it=it->drcha;
+            		else{
+            		 if (it->padre!=0){
+            		   while  (it->padre!=0 && it->drcha==0){
+            		    it=it->padre;
+            		    level = level-1;
+            		   }
+            		   if (it->drcha!=0){
+            		     it=it->drcha;
 
-	 const_iter_preorden & operator ++(){
-	    if (it->izqda!=0){
-	      it= it->izqda;
-	      level = level+1;
-	    }
-	    else{
-		if (it->drcha!=0)
-		  it=it->drcha;
-		else{
-		 if (it->padre!=0){
-		   while  (it->padre!=0 && it->drcha==0){
-		    it=it->padre;
-		    level = level-1;
-		   }
-		   if (it->drcha!=0){
-		     it=it->drcha;
+            		   }
+            		   else{
+            		      it=0;
+            		      level=-1;
+            		   }
 
-		   }
-		   else{
-		      it=0;
-		      level=-1;
-		   }
+            		 }
+            		 else{
+            		   it=0;
+            		   level = -1;
+            		 }
+            		}
+        	    }
+        	    return *this;
+        	 }
+        	 bool operator == (const const_iter_preorden &i)const {
+        	    return i.raiz ==raiz && it==i.it;
+        	 }
 
-		 }
-		 else{
-		   it=0;
-		   level = -1;
-		 }
-		}
-	    }
-	    return *this;
-	 }
-	 bool operator == (const const_iter_preorden &i)const {
-	    return i.raiz ==raiz && it==i.it;
-	 }
+        	 bool operator != (const const_iter_preorden &i)const {
+        	    return i.raiz !=raiz || it!=i.it;
+        	 }
 
-	 bool operator != (const const_iter_preorden &i)const {
-	    return i.raiz !=raiz || it!=i.it;
-
-	 }
-
-	 friend class ArbolGeneral;
+        	 friend class ArbolGeneral;
     };
 
 
-
      iter_preorden begin(){
-	iter_preorden it;
-	it.raiz=laraiz;
-	it.it=laraiz;
-	it.level=-1;
-	return it;
+       iter_preorden it;
+       it.raiz=laraiz;
+       it.it=laraiz;
+       it.level=-1;
+       return it;
      }
      iter_preorden end(){
        iter_preorden it;
@@ -655,15 +646,14 @@ class ArbolGeneral{
        it.it=0;
        it.level=-1;
        return it;
-
      }
 
      const_iter_preorden begin()const{
-	const_iter_preorden it;
-	it.raiz=laraiz;
-	it.it=laraiz;
-	it.level=-1;
-	return it;
+       const_iter_preorden it;
+       it.raiz=laraiz;
+       it.it=laraiz;
+       it.level=-1;
+       return it;
      }
      const_iter_preorden end()const {
        const_iter_preorden it;
@@ -671,9 +661,7 @@ class ArbolGeneral{
        it.it=0;
        it.level=-1;
        return it;
-
      }
-
 };
 
 #include "ArbolGeneral.cpp"

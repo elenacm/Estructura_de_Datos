@@ -10,4 +10,6 @@ istream& operator>>(istream& is, pair<set<string>,int>& mypair);
 
 ostream& operator<<(ostream& out, pair<set<string>,int>& mypair);
 
+ostream& operator<<(ostream& os, set<string>& myset);
+
 #endif

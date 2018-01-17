@@ -80,7 +80,6 @@ string Ontologias::GetDefinicion(int pos){
 
 bool Ontologias::lee_significados(const char * fich_sig){
   fstream f(fich_sig);
-  bool leido = false;
   char espacio;
   string def;
   int numero;
@@ -90,21 +89,33 @@ bool Ontologias::lee_significados(const char * fich_sig){
     f >> espacio;
     getline(f, def, '\n');
     significados.insert(pair<int,string>(numero,def));
-    leido = true;
+    return true;
   }
 
-  return leido;
+  return false;
 }
 
 bool Ontologias::Lee(const char * fich_jerarquia,const char * fic_significados){
   ifstream f(fich_jerarquia);
+  n_palabras = 0;
   bool leido = lee_significados(fic_significados);
+  iterator it;
+  set<string>::iterator it_set;
 
   f >> ab;
-  //CUENTA LAS PALABRAS FINALES!!!
 
-  if(leido)
+  for(it = begin(); it != end(); ++it){
+    if((*it).second != -1){
+      for(it_set = (*it).first.begin(); it_set != (*it).first.end(); ++it_set){
+        n_palabras++;
+      }
+    }
+  }
+
+  if(leido){
     std::cout << "Todo leído correctamente :)" << std::endl;
+    std::cout << "Hay " << n_palabras << " palabras finales :)" << std::endl;
+  }
   else
     std::cout << "Error de lectura :(" << std::endl;
 

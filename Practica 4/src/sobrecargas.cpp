@@ -42,3 +42,13 @@ ostream& operator<<(ostream& out, pair<set<string>,int>& mypair){
 
   return out;
 }
+
+ostream& operator<<(ostream& os, set<string>& myset){
+  set<string>::const_iterator it;
+
+  for(it = myset.cbegin(); it != myset.cend(); ++it){
+    os << *it << std::endl;
+  }
+
+  return os;
+}

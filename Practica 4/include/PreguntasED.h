@@ -41,15 +41,12 @@ class PreguntasED{
     vector<Ontologias::iterator> preguntas_tema; //preguntas asociadas a la tematica escogida.
     int next_pregunta=-1; // la siguiente pregunta a realizar
 
-
     /**
      * @brief Obtiene todas las tematicas de un nivel fijado
      * @note Este metodo inicia el miembro temas con iteradores apuntando a dichas tematicas
      * Ver iterator_level de
      */
-
     void CreaTematica();
-
 
   public:
     /**
@@ -57,22 +54,25 @@ class PreguntasED{
      * @param O: conjunto de ontologias para establecer las preguntas
      * @param tl: nivel de tematica sobre la que construir las preguntas
      */
-    PreguntasED(const Ontologias &O, int tl=4);
+    PreguntasED(const Ontologias &O, int tl=4){
+      Ot = O;
+      tema_level = tl;
+      CreaTematica();
+    }
 
     /**
      * @brief Muestra todas las tematicas en el nivel
-     *
-     * */
+     */
     void MuestraTematicas();
 
     /**
-     @brief Modifica la tematica escogida a un valor
-     @param i: valor de tematica escogida
-     */
+      * @brief Modifica la tematica escogida a un valor
+      * @param i: valor de tematica escogida
+      */
     void SetTematica(int i) ;
 
     /**
-     *@brief Obtiene el titulo de la tematica (el nombre)
+     * @brief Obtiene el titulo de la tematica (el nombre)
      * @return el nombre de la tematica
      */
     string GetTitleTematica();
