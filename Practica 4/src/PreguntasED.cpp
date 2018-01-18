@@ -21,6 +21,7 @@ void PreguntasED::MuestraTematicas(){
 
 void PreguntasED::SetTematica(int i){
   tematica_escogida = i;
+  next_pregunta = 0;
 }
 
 string PreguntasED::GetTitleTematica(){
@@ -54,12 +55,10 @@ string PreguntasED::GetTitleTematica(){
 void PreguntasED::IniciaConceptosTemaEscogido(){
   string palabra = GetTitleTematica();
 
+  
+
 }
 
-/**
- *@brief Baraja todas las preguntas de forma aleatoria.
- *
- **/
 void PreguntasED::BarajarPreguntas(){
 
 }

@@ -55,8 +55,8 @@ class PreguntasED{
      * @param tl: nivel de tematica sobre la que construir las preguntas
      */
     PreguntasED(const Ontologias &O, int tl=4){
-      Ot = O;
       tema_level = tl;
+      Ot = O;
       CreaTematica();
     }
 
