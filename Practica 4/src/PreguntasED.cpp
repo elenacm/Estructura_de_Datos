@@ -11,7 +11,6 @@ void PreguntasED::CreaTematica(){
 
 void PreguntasED::MuestraTematicas(){
   vector<Ontologias::iterator_level>::iterator it_vector;
-  set<string>::iterator it_set;
 
   for(it_vector = temas.begin(); it_vector != temas.end(); ++it_vector){
     std::cout << (*(*it_vector)).first;
@@ -46,36 +45,47 @@ string PreguntasED::GetTitleTematica(){
   return palabra;
 }
 
-/**
- *@brief Almacena todos las definiciones de las tematica escogida
- *@post tras la ejecución el miembro preguntas_tema tiene  las preguntas (significados de las palabras finales)
- *de la temática escogida. Además next_pregunta a 0 tienen un valor 0
- *
- */
 void PreguntasED::IniciaConceptosTemaEscogido(){
   string palabra = GetTitleTematica();
+  //crear un iterador level y asignarle el elemento del array temas que haya elegido el usuario
+  Ontologias::iterator_level it_level = temas[tematica_escogida];
+  //crear un iterador normal a partir de un iterador level con un constructor del iterador normal
+  Ontologias::iterator it(it_level);
+  Ontologias::iterator_level it_level_mas = ++it_level;
+  Ontologias::iterator it_mas(it_level_mas);
 
-  
+  //recorre las palabras de esa tematica
+  //donde empieza? donde acaba?
+  //mañana se sigue
+  //while(){
 
+  //}
 }
 
 void PreguntasED::BarajarPreguntas(){
+  int aleatorio = rand()%preguntas_tema.size();
+  int cont = 0;
+  vector<Ontologias::iterator>::iterator it;
+  vector<Ontologias::iterator> aux = preguntas_tema;
 
+  for(it = preguntas_tema.begin(); it != preguntas_tema.end(); ++it){
+    if(cont == aleatorio){
+      aux.push_back(*it);
+      preguntas_tema.erase(it);
+      it = preguntas_tema.begin();
+    }
+  }
+
+  preguntas_tema = aux;
 }
 
-/**
- *@brief Devuelve la siguiente pregunta a realizar
- *@post next_pregunta se modifica a la siguiente pregunta.
- */
 pair<set<string>,string> PreguntasED::SacaPregunta(){
+  vector<Ontologias::iterator>::iterator it = preguntas_tema.begin();
 
+  next_pregunta++;
+  return ;
 }
 
-/**
- *@brief Obtiene una pregutna
- *@param i: indice de la pregunta a devolver
- *@return un para con con el conjunto de palabras sinonimos que responden a esa pregunta y la definición.
- */
 pair<set<string>,string> PreguntasED::GetPregunta(int i){
 
 }

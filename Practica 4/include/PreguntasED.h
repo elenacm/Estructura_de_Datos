@@ -2,6 +2,7 @@
 #define __PREGUNTAS_ED_H
 #include "Ontologias.h"
 #include <vector>
+#include <stdlib.h> //rand
 
 /**
  * @file Ontologias.h: TDA PreguntasED
@@ -79,23 +80,20 @@ class PreguntasED{
 
 
     /**
-     *@brief Almacena todos las definiciones de las tematica escogida
-     *@post tras la ejecución el miembro preguntas_tema tiene  las preguntas (significados de las palabras finales)
-     *de la temática escogida. Además next_pregunta a 0 tienen un valor 0
-     *
+     * @brief Almacena todos las definiciones de las tematica escogida
+     * @post tras la ejecución el miembro preguntas_tema tiene  las preguntas (significados de las palabras finales)
+     * de la temática escogida. Además next_pregunta a 0 tienen un valor 0
      */
     void IniciaConceptosTemaEscogido();
 
-
     /**
-     *@brief Baraja todas las preguntas de forma aleatoria.
-     *
+     * @brief Baraja todas las preguntas de forma aleatoria.
      **/
     void BarajarPreguntas();
 
     /**
-     *@brief Devuelve la siguiente pregunta a realizar
-     *@post next_pregunta se modifica a la siguiente pregunta.
+     * @brief Devuelve la siguiente pregunta a realizar
+     * @post next_pregunta se modifica a la siguiente pregunta.
      */
     pair<set<string>,string> SacaPregunta();
 
@@ -105,9 +103,9 @@ class PreguntasED{
     int num_preguntas()const{ return preguntas_tema.size();}
 
     /**
-     *@brief Obtiene una pregutna
-     *@param i: indice de la pregunta a devolver
-     *@return un para con con el conjunto de palabras sinonimos que responden a esa pregunta y la definición.
+     * @brief Obtiene una pregutna
+     * @param i: indice de la pregunta a devolver
+     * @return un par con con el conjunto de palabras sinonimos que responden a esa pregunta y la definición.
      */
     pair<set<string>,string> GetPregunta(int i);
 
