@@ -103,9 +103,9 @@ class PreguntasED{
     int num_preguntas()const{ return preguntas_tema.size();}
 
     /**
-     * @brief Obtiene una pregutna
+     * @brief Obtiene una pregunta
      * @param i: indice de la pregunta a devolver
-     * @return un par con con el conjunto de palabras sinonimos que responden a esa pregunta y la definición.
+     * @return un par con el conjunto de palabras sinonimos que responden a esa pregunta y la definición.
      */
     pair<set<string>,string> GetPregunta(int i);
 

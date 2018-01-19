@@ -47,19 +47,21 @@ string PreguntasED::GetTitleTematica(){
 
 void PreguntasED::IniciaConceptosTemaEscogido(){
   string palabra = GetTitleTematica();
-  //crear un iterador level y asignarle el elemento del array temas que haya elegido el usuario
   Ontologias::iterator_level it_level = temas[tematica_escogida];
-  //crear un iterador normal a partir de un iterador level con un constructor del iterador normal
-  Ontologias::iterator it(it_level);
-  Ontologias::iterator_level it_level_mas = ++it_level;
-  Ontologias::iterator it_mas(it_level_mas);
+  Ontologias::iterator inicio(it_level);
+  Ontologias::iterator fin;
 
-  //recorre las palabras de esa tematica
-  //donde empieza? donde acaba?
-  //mañana se sigue
-  //while(){
+  if(tematica_escogida == temas.size()-1){
+    fin = Ot.end();
+  }
+  else{
+    fin = temas[tematica_escogida+1];
+  }
 
-  //}
+  while(inicio != fin){
+    preguntas_tema.push_back(inicio);
+
+  }
 }
 
 void PreguntasED::BarajarPreguntas(){
@@ -83,7 +85,6 @@ pair<set<string>,string> PreguntasED::SacaPregunta(){
   vector<Ontologias::iterator>::iterator it = preguntas_tema.begin();
 
   next_pregunta++;
-  return ;
 }
 
 pair<set<string>,string> PreguntasED::GetPregunta(int i){
