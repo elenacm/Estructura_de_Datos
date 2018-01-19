@@ -43,7 +43,7 @@ string extension = "back";
  Ot.Escribe(test_salida1.c_str(),test_salida2.c_str());
 
  int level;
- cout << "Dime un nivel de tematica (1),(2),(3)" << endl;
+ cout << endl << "Dime un nivel de tematica (1),(2),(3)" << endl;
  cin >> level;
 
  cout << "Las temáticas posibles a nivel " << level << " son:" << endl;
@@ -64,12 +64,12 @@ string extension = "back";
  cin.get();
 
  //Seccion 3: probando preguntasED
- cout << "Test PreguntasED************************************" << endl;
+ cout << "*******************Test PreguntasED*************************" << endl;
 
  PreguntasED Ask(Ot);
  Ask.MuestraTematicas();
 
- cout << " Escoge una de las tematicas posibles:" << endl;
+ cout << endl << "Escoge una de las tematicas posibles:" << endl;
  int ntema;
  cin >> ntema;
  Ask.SetTematica(ntema);
@@ -82,6 +82,7 @@ string extension = "back";
      pair<set<string>,string> p = Ask.SacaPregunta();
      cout << p.second << "?";
      string con;
+     cout << endl;
      getline(cin,con);
      if (p.first.find(con) != p.first.end()){
        cout << "Correcta" << endl;

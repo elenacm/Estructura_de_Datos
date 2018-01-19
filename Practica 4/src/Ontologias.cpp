@@ -67,30 +67,24 @@ list<set<string> > Ontologias::GetSuperPalabra(const string & palabra,const stri
 }
 
 string Ontologias::GetDefinicion(int pos){
-  string n;
+  string n = "hola";
   map<int,string>::iterator it;
 
   for(it = significados.begin(); it != significados.end(); ++it){
-    if((*it).first == pos)
-      return (*it).second;
+    if((*it).first == pos){
+      n = (*it).second;
+    }
   }
 
   return n;
 }
 
 bool Ontologias::lee_significados(const char * fich_sig){
-  fstream f(fich_sig);
-  char espacio;
-  string def;
-  int numero;
+  ifstream f(fich_sig);
+  f >> significados;
 
-  while(!f.eof()){
-    f >> numero;
-    f >> espacio;
-    getline(f, def, '\n');
-    significados.insert(pair<int,string>(numero,def));
+  if(f || f.eof())
     return true;
-  }
 
   return false;
 }
@@ -134,7 +128,6 @@ bool Ontologias::Escribe(const char * fich_jerarquia,const char * fic_significad
       fs << " ";
       fs << (*it_map).second << flush;
     }
-
     return true;
   }
 

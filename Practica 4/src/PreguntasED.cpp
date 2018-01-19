@@ -48,6 +48,7 @@ string PreguntasED::GetTitleTematica(){
 void PreguntasED::IniciaConceptosTemaEscogido(){
   string palabra = GetTitleTematica();
   Ontologias::iterator_level it_level = temas[tematica_escogida];
+  Ontologias::iterator_level it;
   Ontologias::iterator inicio(it_level);
   Ontologias::iterator fin;
 
@@ -55,12 +56,13 @@ void PreguntasED::IniciaConceptosTemaEscogido(){
     fin = Ot.end();
   }
   else{
-    fin = temas[tematica_escogida+1];
+    it = temas[tematica_escogida+1];
+    fin = Ontologias::iterator(it);
   }
 
   while(inicio != fin){
     preguntas_tema.push_back(inicio);
-
+    ++inicio;
   }
 }
 
@@ -82,11 +84,19 @@ void PreguntasED::BarajarPreguntas(){
 }
 
 pair<set<string>,string> PreguntasED::SacaPregunta(){
-  vector<Ontologias::iterator>::iterator it = preguntas_tema.begin();
-
-  next_pregunta++;
+  return GetPregunta(next_pregunta);
 }
 
 pair<set<string>,string> PreguntasED::GetPregunta(int i){
+  pair<set<string>,string> aux;
+  Ontologias::iterator it = preguntas_tema[i];
+  pair<set<string>,int> par = *it;
+  aux.first = par.first;
+  
+  aux.second = Ot.GetDefinicion(par.second);
 
+  preguntas_hechas.insert(par.second);
+  next_pregunta++;
+
+  return aux;
 }

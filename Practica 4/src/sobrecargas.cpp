@@ -3,20 +3,11 @@
 
 using namespace std;
 
-istream& eliminarEspacios(istream& is){
-  while(is.eof()){
-    if(isspace(is.peek()) || is.peek() == '\n')
-      is.get();
-  }
-
-  return is;
-}
-
 istream& operator>>(istream& is, pair<set<string>,int>& mypair){
   int n;
   is >> n;
 
-  eliminarEspacios(is);
+  is.ignore();
 
   char palabra[100];
   for(int i = 0; i < n; i++){
@@ -25,6 +16,19 @@ istream& operator>>(istream& is, pair<set<string>,int>& mypair){
   }
 
   is >> mypair.second;
+
+  return is;
+}
+
+istream& operator>>(istream& is, map<int,string>& mymap){
+  string def;
+  int numero;
+
+  while(is >> numero){
+    is.ignore();
+    getline(is,def,  '\n');
+    mymap.insert(pair<int,string>(numero,def));
+  }
 
   return is;
 }
