@@ -1,7 +1,6 @@
 /**
   * @file Sopa_Letras.h
   * @brief Fichero cabecera del TDA
-  *
   */
 
 #ifndef _SOPA_LETRAS_H
@@ -47,7 +46,6 @@ class Sopa_Letras{
     * Un objeto válido @e rep del TDA Sopa de Letras representa a la estructura
     *
     * rep.matriz[<0,0,'V'>,<0,1,'A'>..<i,j,'*'>]
-    *
     */
   private:
     string titulo; /**< Título de la sopa de letras */
@@ -175,7 +173,7 @@ class Sopa_Letras{
   					s << i << " |" << flush;
   				for(int j=sopa.matriz.getMenor_Columna();j<=sopa.matriz.getMayor_Columna();j++){
   					if(sopa.matriz.getElemento(i,j) != sopa.matriz.get_Valor_Defecto()){
-  						if(sopa.acertadas.getElemento(i,j) != '\0'){
+  						if(sopa.acertadas.getElemento(i,j) != sopa.matriz.get_Valor_Defecto()){
   							s << " " << "\e[1m" <<(char)(toupper(sopa.matriz.getElemento(i,j))) << "\e[0m" << " ";
               }
   						else

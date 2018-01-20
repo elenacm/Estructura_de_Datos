@@ -67,20 +67,7 @@ void PreguntasED::IniciaConceptosTemaEscogido(){
 }
 
 void PreguntasED::BarajarPreguntas(){
-  int aleatorio = rand()%preguntas_tema.size();
-  int cont = 0;
-  vector<Ontologias::iterator>::iterator it;
-  vector<Ontologias::iterator> aux = preguntas_tema;
-
-  for(it = preguntas_tema.begin(); it != preguntas_tema.end(); ++it){
-    if(cont == aleatorio){
-      aux.push_back(*it);
-      preguntas_tema.erase(it);
-      it = preguntas_tema.begin();
-    }
-  }
-
-  preguntas_tema = aux;
+  random_shuffle(preguntas_tema.begin(), preguntas_tema.end());
 }
 
 pair<set<string>,string> PreguntasED::SacaPregunta(){
@@ -92,7 +79,7 @@ pair<set<string>,string> PreguntasED::GetPregunta(int i){
   Ontologias::iterator it = preguntas_tema[i];
   pair<set<string>,int> par = *it;
   aux.first = par.first;
-  
+
   aux.second = Ot.GetDefinicion(par.second);
 
   preguntas_hechas.insert(par.second);

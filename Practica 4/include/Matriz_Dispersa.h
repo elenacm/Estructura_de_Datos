@@ -1,7 +1,6 @@
 /**
   * @file Matriz_Dispersa.h
   * @brief Fichero cabecera del TDA Matriz Dispersa
-  *
   */
 
 #ifndef _MATRIZ_DISPERSA_H
@@ -65,7 +64,6 @@ template <class T>
   class Matriz_Dispersa{
 
     /**
-      *
       * @page repConjunto Rep del TDA Matriz Dispersa
       *
       * @section invConjunto Invariante de la representación
@@ -77,7 +75,6 @@ template <class T>
       * Un objeto válido @e rep del TDA Matriz Dispersa representa la estructura
       *
       * rep.m[<0,0,'A'>,<0,0,'B'>...<i,j,'*'>]
-      *
       */
     private:
 
@@ -153,7 +150,6 @@ template <class T>
       int getMenor_Columna();
 
       /**
-
         * @brief Obtiene la mayor columna
         * @return Devuelve la posicion de la mayor columna
         */
@@ -287,8 +283,8 @@ template <class T>
       };
 
       /**
-  		 * @brief Inicializa un iterator al comienzo de la matriz
-  		 */
+  		  * @brief Inicializa un iterator al comienzo de la matriz
+  		  */
   		 iterator begin(){
   			 iterator i;
   			 i.it=m.begin();
@@ -297,8 +293,8 @@ template <class T>
   		 }
 
   		/**
-  		 * @brief Inicializa un iterator al final de la matriz
-  		 */
+  		  * @brief Inicializa un iterator al final de la matriz
+  		  */
   		 iterator end(){
          iterator i;
          i.it=m.end();

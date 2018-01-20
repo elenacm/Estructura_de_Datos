@@ -52,7 +52,7 @@ string extension = "back";
  for (itl = Ot.beginl(level); itl != Ot.endl(); ++itl){
    pair<set<string>,int> aux= *itl;
    set<string>::iterator sit = aux.first.begin();
-   cout << "Temática" << cnt << " -> ";
+   cout << "Temática " << cnt << " -> ";
    cnt++;
    while (sit!=aux.first.end()){
         cout << *sit << ", ";

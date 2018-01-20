@@ -176,7 +176,7 @@ bool Sopa_Letras::addPalabra(string palabra, int i, int j, string d){
 void Sopa_Letras::Poner_Acertada(string p, int row, int col, string d){
   typename list<string>::iterator it = palabras_ocultas.begin();
   while((*it) != p)
-    it++;
+    ++it;
 
   palabras_ocultas.erase(it); // quitada de no_descubiertas
   palabras_descubiertas.push(p);   // la pongo en la primera posicion de descubiertas

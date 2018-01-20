@@ -107,7 +107,7 @@ bool Ontologias::Lee(const char * fich_jerarquia,const char * fic_significados){
   }
 
   if(leido){
-    std::cout << "Todo leído correctamente :)" << std::endl;
+    std::cout << std::endl << "Todo leído correctamente :)" << std::endl;
     std::cout << "Hay " << n_palabras << " palabras finales :)" << std::endl;
   }
   else

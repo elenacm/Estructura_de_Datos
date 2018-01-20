@@ -31,8 +31,8 @@ using namespace std;
    El espacio requerido para el almacenamiento es O(n), donde n es el número de
    nodos del árbol.
 
-   @author
-   @date
+   @author Elena Cantero Molina
+   @date Enero 2018
 */
 
 template <class Tbase>
@@ -51,7 +51,7 @@ class ArbolGeneral{
 
   private:
     /**
-      *@brief nodo
+      * @brief nodo
       *
       * En cada  estructura \e nodo se almacena una etiqueta del árbol, que se
       * implementa como un conjunto de nodos enlazados según la relación
@@ -59,7 +59,7 @@ class ArbolGeneral{
       */
     struct nodo {
       /**
-        *@brief Elemento almacenado
+        * @brief Elemento almacenado
         *
         * En este campo se almacena la etiqueta que corresponde a este nodo.
         */
@@ -183,7 +183,6 @@ class ArbolGeneral{
       * - Operador de comprobación de desigualdad (!=).
       */
     typedef struct nodo * Nodo;
-
 
     /**
       * @brief Constructor por defecto
@@ -332,7 +331,7 @@ class ArbolGeneral{
       * Asigna un nuevo valor al árbol \e dest, con todos los elementos del
       * subárbol izquierdo del nodo \e n en el árbol receptor. Éste se queda
       * sin dichos nodos.
-      *  La operación se realiza en tiempo O(1).
+      * La operación se realiza en tiempo O(1).
       */
     void podar_hijomasizquierda(Nodo n, ArbolGeneral<Tbase>& dest);
 
@@ -432,10 +431,10 @@ class ArbolGeneral{
       *
       * La operación se realiza en tiempo O(1).
       */
-
-      bool Nulo(const Nodo n)const{
+     bool Nulo(const Nodo n)const{
         return n==0;
      }
+
     /**
       * @brief Operador de extracción de flujo
       * @param in Stream de entrada
@@ -467,9 +466,10 @@ class ArbolGeneral{
     friend std::ostream& operator<< (std::ostream& out, const ArbolGeneral<T>& v);
 
     /**
-     * @brief TDA. Iterador en preorden
-     * */
-    class const_iter_preorden;//declaracion adelantada
+      * @brief TDA. Iterador en preorden
+      */
+    class const_iter_preorden; /**< declaracion adelantada */
+
     class iter_preorden{
        private:
 	        Nodo it;
@@ -548,6 +548,7 @@ class ArbolGeneral{
       	 friend class ArbolGeneral;
       	 friend class const_iter_preorden;
     };
+
     class const_iter_preorden{
        private:
       	  const nodo * it;
@@ -640,6 +641,7 @@ class ArbolGeneral{
        it.level=-1;
        return it;
      }
+
      iter_preorden end(){
        iter_preorden it;
        it.raiz=laraiz;
@@ -655,6 +657,7 @@ class ArbolGeneral{
        it.level=-1;
        return it;
      }
+
      const_iter_preorden end()const {
        const_iter_preorden it;
        it.raiz=laraiz;
