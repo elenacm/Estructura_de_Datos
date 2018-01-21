@@ -64,6 +64,7 @@ int main(int argc, char * argv[]){
  int level;
  cout << endl << "Dime un nivel de tematica -> ";
  cin >> level;
+ string titulo;
 
  cout << "Las temáticas posibles a nivel " << level << " son:" << endl;
  Ontologias::iterator_level itl;
@@ -87,6 +88,23 @@ int main(int argc, char * argv[]){
  cout << endl << "Escoge una de las tematicas posibles -> ";
  cin >> tema;
 
+ Ontologias::iterator_level itl1;
+ int cont = 0;
+ bool encontrado = false;
+ for (itl1 = Ot.beginl(level); itl1 != Ot.endl(); ++itl1){
+   pair<set<string>,int> aux= *itl1;
+   set<string>::iterator sit = aux.first.begin();
+   cont++;
+   while(sit!=aux.first.end() && !encontrado){
+     if(cont == tema){
+       titulo = *sit;
+       encontrado = true;
+     }
+     else
+     ++sit;
+   }
+ }
+
  Ask.SetTematica(tema-1);
  Ask.IniciaConceptosTemaEscogido();
 
@@ -96,10 +114,10 @@ int main(int argc, char * argv[]){
  Ask.BarajarPreguntas();
 
  Sopa_Letras misopa;
- misopa.SetTitulo(Ask.GetTitleTematica());
  set<string> aux;
 
  imprimeDefiniciones(Ask, aux);
+ misopa.SetTitulo(titulo);
  ponePalabraEnSopa(misopa, aux);
 
  while (misopa.Numero_Palabras()!=0){
@@ -126,10 +144,7 @@ int main(int argc, char * argv[]){
     else{
         cout  << endl << "LA PALABRA " << word << " ES CORRECTA."  << endl;
         misopa.Poner_Acertada(word, row, col, direccion);
-        aux.erase(word);
     }
-
-    imprimeDefiniciones(Ask,aux);
  }
  cout << endl << misopa << endl;
  cout << "¡SOPA DE LETRAS CONSEGUIDA!" << endl;

@@ -156,6 +156,7 @@ class Sopa_Letras{
   			s << "Titulo: " << sopa.getTitulo() << endl << flush;
         s << "Numero de palabras ocultas -> " << sopa.getPendientes() << endl;
         s << "Palabras descubiertas -> " << sopa.getAcertadas() << endl;
+        s << endl;
 
         s << "  " << flush;
   			for(int i=sopa.matriz.getMenor_Columna();i<=sopa.matriz.getMayor_Columna();i++){
